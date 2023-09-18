@@ -6,14 +6,14 @@ const {client} = vendiaClient();
 
 export const Demo = () => {
 
-    const [device, setDevice] = useState()
-    const [testID, setTestID] = useState()
+    const [device, setDevice] = useState('')
+    const [testID, setTestID] = useState(0)
     const [testList, setTestList] = useState()
     
     useEffect(() => {
       const listTests = async () => {
         const listTestsResponse = await client.entities.test.list();
-        console.log(listTestsResponse);
+        //console.log(listTestsResponse);
         setTestList(listTestsResponse?.items);
       }
       listTests();
@@ -24,7 +24,7 @@ export const Demo = () => {
             Device: device,
             TestID: testID
         })
-        console.log(addDeviceResponse)
+        //console.log(addDeviceResponse)
     }
 
     const handleDeviceChange = (event) => {
@@ -32,7 +32,7 @@ export const Demo = () => {
     }
 
     const handletestIDChange = (event) => {
-        setDevice(event.target.value);
+        setTestID(parseInt(event.target.value));
     }
 
     const handleSubmit = (event) => {
@@ -42,7 +42,7 @@ export const Demo = () => {
 
   return (
     <div>
-        CSUS Fall 2023
+        Algorithm Allies Team 6
         <div>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -55,7 +55,8 @@ export const Demo = () => {
                 </div>
                 <div>
                     <input
-                    type="text"
+                    type="number"
+                    pattern="[0-9]*"
                     name="testID"
                     value={testID}
                     onChange={handletestIDChange}
