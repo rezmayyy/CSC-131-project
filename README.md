@@ -3,11 +3,10 @@
     Bryce Chao
 ## For team 6 Get Started
 
-1. Fork repository
-2. Go to your github repository
-3. Git clone the repository you forked
+1. Git clone this repository after you have been added to collaborate
 
-### After forking do this steps on your terminal
+### After cloning do this steps on your terminal
+* need node to use npm commands
 1. `npm install -g @vendia/share-cli`
 2. `share client:pull`
 3. `npm install @vendia/client`
