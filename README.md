@@ -1,5 +1,5 @@
 # Algorithm Allies Team 6
-
+    Resmey Austin Mann
 ## For team 6 Get Started
 
 1. Fork repository
