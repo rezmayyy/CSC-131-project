@@ -1,5 +1,6 @@
 # Algorithm Allies Team 6
     Resmey Austin Mann
+    Bryce Chao
 ## For team 6 Get Started
 
 1. Fork repository
