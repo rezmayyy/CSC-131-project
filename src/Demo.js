@@ -40,6 +40,11 @@ export const Demo = () => {
         addDevice();
     }
 
+    const deleteDevice = async (event) => {
+        const removeDeviceResponse = await client.entities.test.remove(event.target.id)
+        console.log(event.target.id)
+        console.log(event.target.key)
+    }
   return (
     <div>
         Algorithm Allies Team 6
@@ -49,6 +54,7 @@ export const Demo = () => {
                     <input
                     type="text"
                     name="Device"
+                    placeholder="Device Name..."
                     value={device}
                     onChange={handleDeviceChange}
                     />
@@ -66,11 +72,12 @@ export const Demo = () => {
             </form>
             <div>
                 {testList?.map((item, index) => (
-                    <div key={index}>
+                    <div key={index} id={item._id} onClick={deleteDevice}>
                         {item.Device}
                     </div>
                 )
                 )}
+                
             </div>
         </div>
     </div>
