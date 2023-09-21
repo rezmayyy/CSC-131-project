@@ -2,6 +2,7 @@
     Resmey Austin Mann
     Bryce Chao
     Christian Buco
+    Steven Ngo
 ## For team 6 Get Started
 
 1. Git clone this repository after you have been added to collaborate
