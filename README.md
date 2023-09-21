@@ -4,6 +4,7 @@
     Christian Buco
     Steven Ngo
     Tony Mai
+    Armaan Randhawa
 ## For team 6 Get Started
 
 1. Git clone this repository after you have been added to collaborate
