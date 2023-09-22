@@ -314,6 +314,7 @@ input Self_Test_PartialInput_ {
 
 input Vendia_Block_transactions_transactionsItem_ConditionInput_ {
   _id: Vendia_ModelStringInput_
+  actor: Vendia_Block_transactions_transactionsItem_actor_ConditionInput_
   hash: Vendia_ModelStringInput_
   redactedHash: Vendia_ModelStringInput_
   signature: Vendia_ModelStringInput_
@@ -328,6 +329,7 @@ input Vendia_Block_transactions_transactionsItem_ConditionInput_ {
 
 input Vendia_Block_transactions_transactionsItem_FilterInput_ {
   _id: Vendia_ModelStringInput_
+  actor: Vendia_Block_transactions_transactionsItem_actor_FilterInput_
   hash: Vendia_ModelStringInput_
   redactedHash: Vendia_ModelStringInput_
   signature: Vendia_ModelStringInput_
@@ -342,6 +344,7 @@ input Vendia_Block_transactions_transactionsItem_FilterInput_ {
 
 type Vendia_Block_transactions_transactionsItem {
   _id: String!
+  actor: Vendia_Block_transactions_transactionsItem_actor
   hash: String!
   redactedHash: String
   signature: String
@@ -363,6 +366,50 @@ type Vendia_Block_transactions_transactionsItem_Transaction_Result_ {
 }
 
 type Vendia_Block_transactions_transactionsItem_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+input Vendia_Block_transactions_transactionsItem_actor_ConditionInput_ {
+  id: Vendia_ModelStringInput_
+  type: Vendia_ModelStringInput_
+  roleId: Vendia_ModelStringInput_
+  roleName: Vendia_ModelStringInput_
+  roleVersion: Vendia_ModelStringInput_
+  _and: [Vendia_Block_transactions_transactionsItem_actor_ConditionInput_]
+  _or: [Vendia_Block_transactions_transactionsItem_actor_ConditionInput_]
+  _not: Vendia_Block_transactions_transactionsItem_actor_ConditionInput_
+}
+
+input Vendia_Block_transactions_transactionsItem_actor_FilterInput_ {
+  id: Vendia_ModelStringInput_
+  type: Vendia_ModelStringInput_
+  roleId: Vendia_ModelStringInput_
+  roleName: Vendia_ModelStringInput_
+  roleVersion: Vendia_ModelStringInput_
+  _and: [Vendia_Block_transactions_transactionsItem_actor_FilterInput_]
+  _or: [Vendia_Block_transactions_transactionsItem_actor_FilterInput_]
+  _not: Vendia_Block_transactions_transactionsItem_actor_FilterInput_
+}
+
+type Vendia_Block_transactions_transactionsItem_actor {
+  id: String!
+  type: Vendia_Block_transactions_transactionsItem_actor_typeEnum!
+  roleId: String
+  roleName: String
+  roleVersion: String
+}
+
+type Vendia_Block_transactions_transactionsItem_actor_Result_ {
+  error: String
+  result: Vendia_Block_transactions_transactionsItem_actor
+}
+
+type Vendia_Block_transactions_transactionsItem_actor_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_Block_transactions_transactionsItem_actor
+}
+
+type Vendia_Block_transactions_transactionsItem_actor_Delete_Transaction_Result_ {
   transaction: Vendia_Transaction!
 }
 
@@ -1723,6 +1770,82 @@ type Vendia_SharingPolicy_acl_aclItem_principal_Delete_Transaction_Result_ {
   transaction: Vendia_Transaction!
 }
 
+input Vendia_CDC_destination_ConditionInput_ {
+  type: Vendia_ModelStringInput_
+  uri: Vendia_ModelStringInput_
+  _and: [Vendia_CDC_destination_ConditionInput_]
+  _or: [Vendia_CDC_destination_ConditionInput_]
+  _not: Vendia_CDC_destination_ConditionInput_
+}
+
+input Vendia_CDC_destination_FilterInput_ {
+  type: Vendia_ModelStringInput_
+  uri: Vendia_ModelStringInput_
+  _and: [Vendia_CDC_destination_FilterInput_]
+  _or: [Vendia_CDC_destination_FilterInput_]
+  _not: Vendia_CDC_destination_FilterInput_
+}
+
+type Vendia_CDC_destination {
+  type: Vendia_CDC_destination_typeEnum
+  uri: String
+}
+
+type Vendia_CDC_destination_Result_ {
+  error: String
+  result: Vendia_CDC_destination
+}
+
+type Vendia_CDC_destination_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_CDC_destination
+}
+
+type Vendia_CDC_destination_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+input Vendia_CDC_subscriptionPeriod_ConditionInput_ {
+  startBlockPositionType: Vendia_ModelStringInput_
+  _and: [Vendia_CDC_subscriptionPeriod_ConditionInput_]
+  _or: [Vendia_CDC_subscriptionPeriod_ConditionInput_]
+  _not: Vendia_CDC_subscriptionPeriod_ConditionInput_
+}
+
+input Vendia_CDC_subscriptionPeriod_FilterInput_ {
+  startBlockPositionType: Vendia_ModelStringInput_
+  _and: [Vendia_CDC_subscriptionPeriod_FilterInput_]
+  _or: [Vendia_CDC_subscriptionPeriod_FilterInput_]
+  _not: Vendia_CDC_subscriptionPeriod_FilterInput_
+}
+
+type Vendia_CDC_subscriptionPeriod {
+  startBlockPositionType: Vendia_CDC_subscriptionPeriod_startBlockPositionTypeEnum
+}
+
+type Vendia_CDC_subscriptionPeriod_Result_ {
+  error: String
+  result: Vendia_CDC_subscriptionPeriod
+}
+
+type Vendia_CDC_subscriptionPeriod_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_CDC_subscriptionPeriod
+}
+
+type Vendia_CDC_subscriptionPeriod_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+enum Vendia_Block_transactions_transactionsItem_actor_typeEnum {
+  API_KEY
+  API_CREDENTIALS
+  VENDIA_USER
+  VENDIA_SYSTEM
+  VENDIA_INTERNAL
+  JWT_EXTERNAL
+}
+
 enum Vendia_File_vendia_checksums_checksumsItem_algorithmEnum {
   md5
   sha256
@@ -1792,6 +1915,15 @@ enum Vendia_SharingPolicy_acl_aclItem_operations_operationsItemEnum {
   WRITE
   INVOKE
   ERASE_GLOBAL
+}
+
+enum Vendia_CDC_destination_typeEnum {
+  AWS_LAMBDA_ARN
+}
+
+enum Vendia_CDC_subscriptionPeriod_startBlockPositionTypeEnum {
+  LATEST
+  ORIGIN
 }
 
 enum Vendia_Block_statusEnum {
@@ -3195,6 +3327,87 @@ input Vendia_SharingPolicy_PartialInput_ {
   acl: [Vendia_SharingPolicy_acl_aclItem_PartialInput_]
 }
 
+input Vendia_CDC_ConditionInput_ {
+  name: Vendia_ModelStringInput_
+  destination: Vendia_CDC_destination_ConditionInput_
+  enabled: Vendia_ModelBooleanInput_
+  subscriptionPeriod: Vendia_CDC_subscriptionPeriod_ConditionInput_
+  statusReason: Vendia_ModelStringInput_
+  _and: [Vendia_CDC_ConditionInput_]
+  _or: [Vendia_CDC_ConditionInput_]
+  _not: Vendia_CDC_ConditionInput_
+}
+
+input Vendia_CDC_FilterInput_ {
+  _owner: Vendia_ModelStringInput_
+  name: Vendia_ModelStringInput_
+  destination: Vendia_CDC_destination_FilterInput_
+  enabled: Vendia_ModelBooleanInput_
+  subscriptionPeriod: Vendia_CDC_subscriptionPeriod_FilterInput_
+  statusReason: Vendia_ModelStringInput_
+  _and: [Vendia_CDC_FilterInput_]
+  _or: [Vendia_CDC_FilterInput_]
+  _not: Vendia_CDC_FilterInput_
+}
+
+input Vendia_CDC_OrderInput_ {
+  _id: Vendia_ModelSortDirection
+}
+
+type Vendia_CDC {
+  _id: ID!
+  name: String
+  destination: Vendia_CDC_destination
+  enabled: Boolean
+  subscriptionPeriod: Vendia_CDC_subscriptionPeriod
+  statusReason: String
+  _acl: [Vendia_Acl!]
+  _owner: String
+}
+
+type Vendia_CDC_Result_ {
+  error: String
+  result: Vendia_CDC
+}
+
+type Vendia_CDC_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_CDC
+}
+
+type Vendia_CDC_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+type Vendia_CDC_Connection_ {
+  Vendia_CDCItems: [Vendia_CDC]
+  nextToken: String
+}
+
+input Vendia_CDC_Input_ {
+  name: String!
+  destination: Vendia_CDC_destination_Input_
+  enabled: Boolean!
+  subscriptionPeriod: Vendia_CDC_subscriptionPeriod_Input_
+  statusReason: String
+}
+
+input Vendia_CDC_UpdateInput_ {
+  name: String
+  destination: Vendia_CDC_destination_UpdateInput_
+  enabled: Boolean
+  subscriptionPeriod: Vendia_CDC_subscriptionPeriod_UpdateInput_
+  statusReason: String
+}
+
+input Vendia_CDC_PartialInput_ {
+  name: String
+  destination: Vendia_CDC_destination_PartialInput_
+  enabled: Boolean
+  subscriptionPeriod: Vendia_CDC_subscriptionPeriod_PartialInput_
+  statusReason: String
+}
+
 input Vendia_Contract_InvokeInput_ {
   invocationId: String
   queryArgs: String
@@ -3203,7 +3416,7 @@ input Vendia_Contract_InvokeInput_ {
 
 type Query {
   get_Test(id: ID!, version: Int, readMode: Vendia_ReadMode = NODE_COMMITTED): Self_Test
-  list_TestItems(filter: Self_Test_FilterInput_, readMode: Vendia_ReadMode = NODE_COMMITTED, order: [Self_Test_OrderInput_!], limit: Int, nextToken: String): Self_Test_Connection_
+  list_TestItems(filter: Self_Test_FilterInput_, readMode: Vendia_ReadMode = NODE_LEDGERED, order: [Self_Test_OrderInput_!], limit: Int, nextToken: String): Self_Test_Connection_
   list_TestVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
   listVendia_SubscriptionItems(filter: Vendia_Subscription_FilterInput_, order: [Vendia_Subscription_OrderInput_!], limit: Int, nextToken: String): Vendia_Subscription_Connection_
   getVendia_Block(id: ID!): Vendia_Block
@@ -3335,6 +3548,7 @@ type Schema {
 
 input Vendia_Block_transactions_transactionsItem_Input_ {
   _id: String!
+  actor: Vendia_Block_transactions_transactionsItem_actor_Input_
   hash: String!
   redactedHash: String
   signature: String
@@ -3346,6 +3560,7 @@ input Vendia_Block_transactions_transactionsItem_Input_ {
 
 input Vendia_Block_transactions_transactionsItem_UpdateInput_ {
   _id: String
+  actor: Vendia_Block_transactions_transactionsItem_actor_UpdateInput_
   hash: String
   redactedHash: String
   signature: String
@@ -3357,6 +3572,7 @@ input Vendia_Block_transactions_transactionsItem_UpdateInput_ {
 
 input Vendia_Block_transactions_transactionsItem_PartialInput_ {
   _id: String
+  actor: Vendia_Block_transactions_transactionsItem_actor_PartialInput_
   hash: String
   redactedHash: String
   signature: String
@@ -3364,6 +3580,30 @@ input Vendia_Block_transactions_transactionsItem_PartialInput_ {
   submissionTime: String
   mutations: [String]
   _owner: String
+}
+
+input Vendia_Block_transactions_transactionsItem_actor_Input_ {
+  id: String!
+  type: Vendia_Block_transactions_transactionsItem_actor_typeEnum!
+  roleId: String
+  roleName: String
+  roleVersion: String
+}
+
+input Vendia_Block_transactions_transactionsItem_actor_UpdateInput_ {
+  id: String
+  type: Vendia_Block_transactions_transactionsItem_actor_typeEnum
+  roleId: String
+  roleName: String
+  roleVersion: String
+}
+
+input Vendia_Block_transactions_transactionsItem_actor_PartialInput_ {
+  id: String
+  type: Vendia_Block_transactions_transactionsItem_actor_typeEnum
+  roleId: String
+  roleName: String
+  roleVersion: String
 }
 
 input Vendia_Block__erasure_Input_ {
@@ -4023,4 +4263,31 @@ input Vendia_SharingPolicy_acl_aclItem_principal_UpdateInput_ {
 
 input Vendia_SharingPolicy_acl_aclItem_principal_PartialInput_ {
   nodes: [String]
+}
+
+input Vendia_CDC_destination_Input_ {
+  type: Vendia_CDC_destination_typeEnum
+  uri: String
+}
+
+input Vendia_CDC_destination_UpdateInput_ {
+  type: Vendia_CDC_destination_typeEnum
+  uri: String
+}
+
+input Vendia_CDC_destination_PartialInput_ {
+  type: Vendia_CDC_destination_typeEnum
+  uri: String
+}
+
+input Vendia_CDC_subscriptionPeriod_Input_ {
+  startBlockPositionType: Vendia_CDC_subscriptionPeriod_startBlockPositionTypeEnum
+}
+
+input Vendia_CDC_subscriptionPeriod_UpdateInput_ {
+  startBlockPositionType: Vendia_CDC_subscriptionPeriod_startBlockPositionTypeEnum
+}
+
+input Vendia_CDC_subscriptionPeriod_PartialInput_ {
+  startBlockPositionType: Vendia_CDC_subscriptionPeriod_startBlockPositionTypeEnum
 }
