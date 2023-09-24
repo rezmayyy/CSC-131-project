@@ -24,6 +24,7 @@ export const Demo = () => {
             Device: device,
             TestID: testID
         })
+        refreshList()
         //console.log(addDeviceResponse)
     }
 
@@ -40,10 +41,14 @@ export const Demo = () => {
         addDevice();
     }
 
+    const refreshList = async () => {
+        const listTestsResponse = await client.entities.test.list();
+        setTestList(listTestsResponse?.items);
+      }
+
     const deleteDevice = async (event) => {
         const removeDeviceResponse = await client.entities.test.remove(event.target.id)
-        console.log(event.target.id)
-        console.log(event.target.key)
+        refreshList()
     }
   return (
     <div>
@@ -71,13 +76,20 @@ export const Demo = () => {
                 <input type="submit" />
             </form>
             <div>
-                {testList?.map((item, index) => (
-                    <div key={index} id={item._id} onClick={deleteDevice}>
+                {/* {testList?.map((item, index) => (
+                    <div key={index}>
                         {item.Device}
+                        <button id={item._id} key={index} onClick={deleteDevice}>x</button>
+                    </div>
+                )
+                )} */}
+                {testList?.map((item) => (
+                    <div key={item._id}>
+                        {item.Device}
+                        <button id={item._id} onClick={deleteDevice}>x</button>
                     </div>
                 )
                 )}
-                
             </div>
         </div>
     </div>
