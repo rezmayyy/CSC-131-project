@@ -19,6 +19,8 @@ export const Demo = () => {
       listTests();
     }, [])
 
+    // function to add device based on schema
+    // need Device, TestID, OrgAssignment, TestName, Notes, Completed, UpdatedBy
     const addDevice = async () => {
         const addDeviceResponse = await client.entities.test.add({
             Device: device,
@@ -36,16 +38,21 @@ export const Demo = () => {
         setTestID(parseInt(event.target.value));
     }
 
+    // when user clicks on submit call addDevice
     const handleSubmit = (event) => {
         event.preventDefault();
         addDevice();
     }
 
+    // refreshList (i think there is a better way, idk how)
+    // regrab the list from client and setTestList
     const refreshList = async () => {
         const listTestsResponse = await client.entities.test.list();
         setTestList(listTestsResponse?.items);
-      }
+    }
 
+    // When button is clicked remove the device
+    // function to remove a device
     const deleteDevice = async (event) => {
         const removeDeviceResponse = await client.entities.test.remove(event.target.id)
         refreshList()
@@ -76,15 +83,8 @@ export const Demo = () => {
                 <input type="submit" />
             </form>
             <div>
-                {/* {testList?.map((item, index) => (
+                {testList?.map((item, index) => (
                     <div key={index}>
-                        {item.Device}
-                        <button id={item._id} key={index} onClick={deleteDevice}>x</button>
-                    </div>
-                )
-                )} */}
-                {testList?.map((item) => (
-                    <div key={item._id}>
                         {item.Device}
                         <button id={item._id} onClick={deleteDevice}>x</button>
                     </div>
