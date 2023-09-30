@@ -4,6 +4,8 @@ import { vendiaClient } from './vendiaClient';
 
 const {client} = vendiaClient();
 
+export const ThemeContext = React.createContext()
+
 export const HomePage = () => {
 
     const [device, setDevice] = useState('')
@@ -60,8 +62,8 @@ export const HomePage = () => {
   return (
     <div>
         Algorithm Allies Team 6
-        <div>
-            
+
+        <ThemeContext.Provider value = {{device, testID, testList }}>      
             <div>
                 {testList?.map((item, index) => (
                     <div key={index}>
@@ -71,7 +73,7 @@ export const HomePage = () => {
                 )
                 )}
             </div>
-        </div>
+        </ThemeContext.Provider>
     </div>
   )
 };
