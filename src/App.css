@@ -35,4 +35,13 @@
   to {
     transform: rotate(360deg);
   }
+
+  
+}
+
+.item-box {
+  border: 2px solid #ccc; /* Border style, adjust as needed */
+  padding: 10px; /* Optional padding for spacing inside the box */
+  margin: 10px; /* Optional margin for spacing between boxes */
+  border-radius: 10px;
 }

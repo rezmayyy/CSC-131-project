@@ -23,11 +23,12 @@ export const HomePage = () => {
 
   return (
     <div>
-      Algorithm Allies Team 6
+      <h1>Algorithm Allies Team 6</h1>
       <button onClick={testingStuff}>test</button>
       <div>
+        <h2>Device List:</h2>
         {testList?.map((item, index) => (
-          <div key={index}>
+          <div key={index} className="item-box">
             {item.Device}
           </div>
         )
@@ -35,5 +36,6 @@ export const HomePage = () => {
       </div>
     </div>
   )
+
 };
 
