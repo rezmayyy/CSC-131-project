@@ -1,13 +1,40 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { client } from "./HomePage";
 import { DataContext } from "./dataContext";
 
 export const FormPage = () => {
 
-    const {device, testID, testList} = useContext(DataContext);
-    const [stateDevice, setStateDevice] = device;
-    const [stateTestID, setStateTestID] = testID;
-    const [stateTestList, setStateTestList] = testList;
+    const [device, setDevice] = useContext(DataContext).device
+    const [testID, setTestID] = useContext(DataContext).testID
+    const [testList, setTestList] = useContext(DataContext).testList
+    
+    useEffect(() => {
+      const listTests = async () => {
+        const listTestsResponse = await client.entities.test.list();
+        //console.log(listTestsResponse);
+        setTestList(listTestsResponse?.items);
+      }
+      listTests();
+    }, [])
+
+    // function to add device based on schema
+    // need Device, TestID, OrgAssignment, TestName, Notes, Completed, UpdatedBy
+    const addDevice = async () => {
+        const addDeviceResponse = await client.entities.test.add({
+            Device: device,
+            TestID: testID
+        })
+        refreshList()
+        //console.log(addDeviceResponse)
+    }
+
+    const handleDeviceChange = (event) => {
+        setDevice(event.target.value);
+    }
+
+    const handletestIDChange = (event) => {
+        setTestID(parseInt(event.target.value));
+    }
 
     // when user clicks on submit call addDevice
     const handleSubmit = (event) => {
@@ -15,52 +42,45 @@ export const FormPage = () => {
         addDevice();
     }
 
-    const addDevice = async () => {
-        const addDeviceResponse = await client.entities.test.add({
-            Device: stateDevice,
-            TestID: stateTestID
-        })
-        refreshList()
-        //console.log(addDeviceResponse)
-    }
-
-    const handleDeviceChange = (event) => {
-        setStateDevice(event.target.value);
-    }
-
-    const handletestIDChange = (event) => {
-        setStateTestID(parseInt(event.target.value));
-    }
-
     // refreshList (i think there is a better way, idk how)
     // regrab the list from client and setTestList
     const refreshList = async () => {
         const listTestsResponse = await client.entities.test.list();
-        setStateTestList(listTestsResponse?.items);
+        setTestList(listTestsResponse?.items);
     }
 
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <input
+    // When button is clicked remove the device
+    // function to remove a device
+    const deleteDevice = async (event) => {
+        const removeDeviceResponse = await client.entities.test.remove(event.target.id)
+        refreshList()
+    }
+  return (
+    <div>
+        FormPage
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <input
                     type="text"
                     name="Device"
                     placeholder="Device Name..."
-                    value={stateDevice}
+                    value={device}
                     onChange={handleDeviceChange}
-                />
-            </div>
-            <div>
-                <input
+                    />
+                </div>
+                <div>
+                    <input
                     type="number"
                     pattern="[0-9]*"
                     name="testID"
-                    value={stateTestID}
+                    value={testID}
                     onChange={handletestIDChange}
-                />
-            </div>
-            <input type="submit" />
-        </form>
-    )
+                    />
+                </div>
+                <input type="submit" />
+            </form>
+        </div>
+    </div>
+  )
 };

@@ -15,16 +15,11 @@ export const HomePage = () => {
   // const [stateDevice, setStateDevice] = device;
   // const [stateTestID, setStateTestID] = testID;
   // const [stateTestList, setStateTestList] = testList;
-  const testList = useContext(DataContext).testList[0]
-
-  const testingStuff = () => {
-    console.log(testList)
-  }
+  const [testList,setTestList] = useContext(DataContext).testList
 
   return (
     <div>
       Algorithm Allies Team 6
-      <button onClick={testingStuff}>test</button>
       <div>
         {testList?.map((item, index) => (
           <div key={index}>
