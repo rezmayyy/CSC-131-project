@@ -14,15 +14,22 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: midnightblue;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+/* Outline for text, idk i thought it would be cool but it hurts my eyes */
+/*
+.App-header h1 {
+  font-size: calc(30px + 2vmin);
+  color: white;
+  -webkit-text-stroke: 2px darkslategrey;
+}
+*/
 
 .App-link {
   color: #61dafb;
@@ -39,9 +46,23 @@
   
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color:cornflowerblue;
+  border: 7px solid rebeccapurple;
+  margin: 0px auto;
+  width: 55%;
+  border-radius: 10px;
+}
+
 .item-box {
-  border: 2px solid #ccc; /* Border style, adjust as needed */
-  padding: 10px; /* Optional padding for spacing inside the box */
-  margin: 10px; /* Optional margin for spacing between boxes */
+  box-sizing: border-box;
+  width: 50%;
+  border: 2px solid #ccc; 
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-radius: 10px;
 }
