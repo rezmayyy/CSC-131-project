@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { vendiaClient } from './vendiaClient';
 import { DataContext } from './dataContext';
 
-const {client} = vendiaClient();
+const { client } = vendiaClient();
 
 export const FormPage = () => {
 
@@ -16,7 +16,7 @@ export const FormPage = () => {
     const [notes, setNotes] = useContext(DataContext).notes
     const [completed, setCompleted] = useContext(DataContext).completed
     const [updatedBy, setUpdatedBy] = useContext(DataContext).updatedBy
-    
+
     // function to add device based on schema
     // need Device, TestID, OrgAssignment, TestName, Notes, Completed, UpdatedBy
     const addDevice = async () => {
@@ -32,6 +32,24 @@ export const FormPage = () => {
         })
         refreshList()
         //console.log(addDeviceResponse)
+    }
+
+    const updateDevice = async (event) => {
+        if (device !== "") {
+            const updateDeviceResponse = await client.entities.test.update({
+                _id: event.target.id,
+                Device: device,
+                TestID: testID,
+                OrgAssignment: orgAssignment,
+                TestName: testName,
+                TestMethod: testMethod,
+                Notes: notes,
+                Completed: completed,
+                UpdatedBy: updatedBy
+            })
+            console.log(updateDeviceResponse)
+            refreshList()
+        }
     }
 
     const handleDeviceChange = (event) => {
@@ -65,7 +83,7 @@ export const FormPage = () => {
     const handleUpdatedBy = (event) => {
         setUpdatedBy(event.target.value);
     }
-    
+
     // when user clicks on submit call addDevice
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -86,95 +104,96 @@ export const FormPage = () => {
         const removeDeviceResponse = await client.entities.test.remove(event.target.id)
         refreshList()
     }
-  return (
-    <div>
-        Algorithm Allies Team 6
+    return (
         <div>
-            <form autocomplete="off" onSubmit={handleSubmit}>
-                <div>
-                    <input
-                    type="text"
-                    name="device"
-                    placeholder="Device Name..."
-                    value={device}
-                    onChange={handleDeviceChange}
-                    />
-                </div>
-                <div>
-                    <input
-                    type="number"
-                    pattern="[0-9]*"
-                    name="testID"
-                    value={testID}
-                    onChange={handletestIDChange}
-                    />
-                </div>
-                <div>
-                    <input
-                    type="text"
-                    name="orgAssignment"
-                    placeholder="Org Assignment"
-                    value={orgAssignment}
-                    onChange={handleOrgAssignmentChange}
-                    />
-                </div>
-                <div>
-                    <input
-                    type="text"
-                    name="testName"
-                    placeholder="Test Name"
-                    value={testName}
-                    onChange={handleTestNameChange}
-                    />
-                </div>
-                <div>
-                    <input
-                    type="text"
-                    name="testMethod"
-                    placeholder="Test Method"
-                    value={testMethod}
-                    onChange={handleTestMethod}
-                    />
-                </div>
-                <div>
-                    <input
-                    type="text"
-                    name="testNotes"
-                    placeholder="Test Notes"
-                    value={notes}
-                    onChange={handleNotes}
-                    />
-                </div>
-                <div>
-                    <input 
-                        type="checkbox" 
-                        value={completed} 
-                        onChange={handleCompleted}
-                    />
-                    <span>Completed</span>
-                </div>
-                <div>
-                    <input
-                    type="text"
-                    name="testupdatedBy"
-                    placeholder="Updated by"
-                    value={updatedBy}
-                    onChange={handleUpdatedBy}
-                    />
-                </div>
-
-                <input type="submit" />
-            </form>
+            Algorithm Allies Team 6
             <div>
-                {testList?.map((item, index) => (
-                    <div key={index}>
-                        {item.Device}
-                        <button id={item._id} onClick={deleteDevice}>x</button>
+                <form autocomplete="off" onSubmit={handleSubmit}>
+                    <div>
+                        <input
+                            type="text"
+                            name="device"
+                            placeholder="Device Name..."
+                            value={device}
+                            onChange={handleDeviceChange}
+                        />
                     </div>
-                )
-                )}
+                    <div>
+                        <input
+                            type="number"
+                            pattern="[0-9]*"
+                            name="testID"
+                            value={testID}
+                            onChange={handletestIDChange}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="orgAssignment"
+                            placeholder="Org Assignment"
+                            value={orgAssignment}
+                            onChange={handleOrgAssignmentChange}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="testName"
+                            placeholder="Test Name"
+                            value={testName}
+                            onChange={handleTestNameChange}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="testMethod"
+                            placeholder="Test Method"
+                            value={testMethod}
+                            onChange={handleTestMethod}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="testNotes"
+                            placeholder="Test Notes"
+                            value={notes}
+                            onChange={handleNotes}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="checkbox"
+                            value={completed}
+                            onChange={handleCompleted}
+                        />
+                        <span>Completed</span>
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="testupdatedBy"
+                            placeholder="Updated by"
+                            value={updatedBy}
+                            onChange={handleUpdatedBy}
+                        />
+                    </div>
+
+                    <input type="submit" />
+                </form>
+                <div>
+                    {testList?.map((item, index) => (
+                        <div key={index}>
+                            {item.Device}
+                            <button id={item._id} onClick={deleteDevice}>x</button>
+                            <button id={item._id} onClick={updateDevice}>update</button>
+                        </div>
+                    )
+                    )}
+                </div>
             </div>
         </div>
-    </div>
-  )
+    )
 };
