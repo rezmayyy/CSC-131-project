@@ -9,14 +9,14 @@ export const Demo = () => {
     const [device, setDevice] = useState('')
     const [testID, setTestID] = useState(0)
     const [testList, setTestList] = useState()
-    
+
     useEffect(() => {
-      const listTests = async () => {
-        const listTestsResponse = await client.entities.test.list();
-        //console.log(listTestsResponse);
-        setTestList(listTestsResponse?.items);
-      }
-      listTests();
+        const listTests = async () => {
+            const listTestsResponse = await client.entities.test.list();
+            //console.log(listTestsResponse);
+            setTestList(listTestsResponse?.items);
+        }
+        listTests();
     }, [])
 
     // function to add device based on schema
@@ -57,41 +57,58 @@ export const Demo = () => {
         const removeDeviceResponse = await client.entities.test.remove(event.target.id)
         refreshList()
     }
-  return (
-    <div>
-        Algorithm Allies Team 6
+
+    const updateDevice = async (event) => {
+        if (device !== "") {
+            const updateDeviceResponse = await client.entities.test.update({
+                _id: event.target.id,
+                Device: device,
+                TestID: testID,
+                
+
+            })
+            console.log(updateDeviceResponse)
+            refreshList()
+        }
+    }
+
+
+    return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                    type="text"
-                    name="Device"
-                    placeholder="Device Name..."
-                    value={device}
-                    onChange={handleDeviceChange}
-                    />
-                </div>
-                <div>
-                    <input
-                    type="number"
-                    pattern="[0-9]*"
-                    name="testID"
-                    value={testID}
-                    onChange={handletestIDChange}
-                    />
-                </div>
-                <input type="submit" />
-            </form>
+            Algorithm Allies Team 6
             <div>
-                {testList?.map((item, index) => (
-                    <div key={index}>
-                        {item.Device}
-                        <button id={item._id} onClick={deleteDevice}>x</button>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <input
+                            type="text"
+                            name="Device"
+                            placeholder="Device Name..."
+                            value={device}
+                            onChange={handleDeviceChange}
+                        />
                     </div>
-                )
-                )}
+                    <div>
+                        <input
+                            type="number"
+                            pattern="[0-9]*"
+                            name="testID"
+                            value={testID}
+                            onChange={handletestIDChange}
+                        />
+                    </div>
+                    <input type="submit" />
+                </form>
+                <div>
+                    {testList?.map((item, index) => (
+                        <div key={index}>
+                            {item.Device}
+                            <button id={item._id} onClick={deleteDevice}>x</button>
+                            <button id={item._id} onClick={updateDevice}>update</button>
+                        </div>
+                    )
+                    )}
+                </div>
             </div>
         </div>
-    </div>
-  )
+    )
 };
