@@ -1,30 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect, useState } from "react";
 import { vendiaClient } from './vendiaClient';
+import { DataContext } from './dataContext';
 
 const {client} = vendiaClient();
 
 export const FormPage = () => {
 
-    const [device, setDevice] = useState('')
-    const [testID, setTestID] = useState(0)
-    const [testList, setTestList] = useState()
-    const [orgAssignment, setOrgAssignment] = useState('');
-    const [testName, setTestName] = useState('');
-    const [testMethod, setTestMethod] = useState('');
-    const [notes, setNotes] = useState('');
-    const [completed, setCompleted] = useState(false);
-    const [updatedBy, setUpdatedBy] = useState('');
+    const [device, setDevice] = useContext(DataContext).device
+    const [testID, setTestID] = useContext(DataContext).testID
+    const [testList, setTestList] = useContext(DataContext).testList
+    const [orgAssignment, setOrgAssignment] = useContext(DataContext).orgAssignment
+    const [testName, setTestName] = useContext(DataContext).testName
+    const [testMethod, setTestMethod] = useContext(DataContext).testMethod
+    const [notes, setNotes] = useContext(DataContext).notes
+    const [completed, setCompleted] = useContext(DataContext).completed
+    const [updatedBy, setUpdatedBy] = useContext(DataContext).updatedBy
     
-    useEffect(() => {
-      const listTests = async () => {
-        const listTestsResponse = await client.entities.test.list();
-        //console.log(listTestsResponse);
-        setTestList(listTestsResponse?.items);
-      }
-      listTests();
-    }, [])
-
     // function to add device based on schema
     // need Device, TestID, OrgAssignment, TestName, Notes, Completed, UpdatedBy
     const addDevice = async () => {
