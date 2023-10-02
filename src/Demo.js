@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { vendiaClient } from './vendiaClient';
 
 const {client} = vendiaClient();
@@ -9,6 +9,12 @@ export const Demo = () => {
     const [device, setDevice] = useState('')
     const [testID, setTestID] = useState(0)
     const [testList, setTestList] = useState()
+    const [orgAssignment, setOrgAssignment] = useState('');
+    const [testName, setTestName] = useState('');
+    const [testMethod, setTestMethod] = useState('');
+    const [notes, setNotes] = useState('');
+    //const [completed, setCompleted] = ();
+    const [updatedBy, setUpdatedBy] = ('');
     
     useEffect(() => {
       const listTests = async () => {
@@ -24,7 +30,14 @@ export const Demo = () => {
     const addDevice = async () => {
         const addDeviceResponse = await client.entities.test.add({
             Device: device,
-            TestID: testID
+            TestID: testID,
+            OrgAssignment: orgAssignment,
+            TestName: testName,
+            TestMethod: testMethod,
+            Notes: notes,
+            //Completed: completed,
+            UpdatedBy: updatedBy
+
         })
         refreshList()
         //console.log(addDeviceResponse)
@@ -36,6 +49,10 @@ export const Demo = () => {
 
     const handletestIDChange = (event) => {
         setTestID(parseInt(event.target.value));
+    }
+
+    const handleOrgAssignmentChange = (event) => {
+        setOrgAssignment(event.target.value);
     }
 
     // when user clicks on submit call addDevice
@@ -65,7 +82,7 @@ export const Demo = () => {
                 <div>
                     <input
                     type="text"
-                    name="Device"
+                    name="device"
                     placeholder="Device Name..."
                     value={device}
                     onChange={handleDeviceChange}
@@ -78,6 +95,15 @@ export const Demo = () => {
                     name="testID"
                     value={testID}
                     onChange={handletestIDChange}
+                    />
+                </div>
+                <div>
+                    <input
+                    type="text"
+                    name="orgAssignment"
+                    placeholder="OrgAssignment"
+                    value={orgAssignment}
+                    onChange={handleOrgAssignmentChange}
                     />
                 </div>
                 <input type="submit" />

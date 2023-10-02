@@ -1,12 +1,20 @@
-import React, { useContext, useEffect } from "react";
-import { client } from "./HomePage";
-import { DataContext } from "./dataContext";
+import React from 'react';
+import { useEffect, useState } from "react";
+import { vendiaClient } from './vendiaClient';
+
+const {client} = vendiaClient();
 
 export const FormPage = () => {
 
-    const [device, setDevice] = useContext(DataContext).device
-    const [testID, setTestID] = useContext(DataContext).testID
-    const [testList, setTestList] = useContext(DataContext).testList
+    const [device, setDevice] = useState('')
+    const [testID, setTestID] = useState(0)
+    const [testList, setTestList] = useState()
+    const [orgAssignment, setOrgAssignment] = useState('');
+    const [testName, setTestName] = useState('');
+    const [testMethod, setTestMethod] = useState('');
+    const [notes, setNotes] = useState('');
+    const [completed, setCompleted] = useState(false);
+    const [updatedBy, setUpdatedBy] = useState('');
     
     useEffect(() => {
       const listTests = async () => {
@@ -22,7 +30,13 @@ export const FormPage = () => {
     const addDevice = async () => {
         const addDeviceResponse = await client.entities.test.add({
             Device: device,
-            TestID: testID
+            TestID: testID,
+            OrgAssignment: orgAssignment,
+            TestName: testName,
+            TestMethod: testMethod,
+            Notes: notes,
+            Completed: completed,
+            UpdatedBy: updatedBy
         })
         refreshList()
         //console.log(addDeviceResponse)
@@ -36,11 +50,36 @@ export const FormPage = () => {
         setTestID(parseInt(event.target.value));
     }
 
+    const handleOrgAssignmentChange = (event) => {
+        setOrgAssignment(event.target.value);
+    }
+
+    const handleTestNameChange = (event) => {
+        setTestName(event.target.value);
+    }
+
+    const handleTestMethod = (event) => {
+        setTestMethod(event.target.value);
+    }
+
+    const handleNotes = (event) => {
+        setNotes(event.target.value);
+    }
+
+    const handleCompleted = (event) => {
+        setCompleted(event.target.checked);
+    }
+
+    const handleUpdatedBy = (event) => {
+        setUpdatedBy(event.target.value);
+    }
+    
     // when user clicks on submit call addDevice
     const handleSubmit = (event) => {
         event.preventDefault();
         addDevice();
     }
+
 
     // refreshList (i think there is a better way, idk how)
     // regrab the list from client and setTestList
@@ -57,13 +96,13 @@ export const FormPage = () => {
     }
   return (
     <div>
-        FormPage
+        Algorithm Allies Team 6
         <div>
-            <form onSubmit={handleSubmit}>
+            <form autocomplete="off" onSubmit={handleSubmit}>
                 <div>
                     <input
                     type="text"
-                    name="Device"
+                    name="device"
                     placeholder="Device Name..."
                     value={device}
                     onChange={handleDeviceChange}
@@ -78,8 +117,71 @@ export const FormPage = () => {
                     onChange={handletestIDChange}
                     />
                 </div>
+                <div>
+                    <input
+                    type="text"
+                    name="orgAssignment"
+                    placeholder="Org Assignment"
+                    value={orgAssignment}
+                    onChange={handleOrgAssignmentChange}
+                    />
+                </div>
+                <div>
+                    <input
+                    type="text"
+                    name="testName"
+                    placeholder="Test Name"
+                    value={testName}
+                    onChange={handleTestNameChange}
+                    />
+                </div>
+                <div>
+                    <input
+                    type="text"
+                    name="testMethod"
+                    placeholder="Test Method"
+                    value={testMethod}
+                    onChange={handleTestMethod}
+                    />
+                </div>
+                <div>
+                    <input
+                    type="text"
+                    name="testNotes"
+                    placeholder="Test Notes"
+                    value={notes}
+                    onChange={handleNotes}
+                    />
+                </div>
+                <div>
+                    <input 
+                        type="checkbox" 
+                        value={completed} 
+                        onChange={handleCompleted}
+                    />
+                    <span>Completed</span>
+                </div>
+                <div>
+                    <input
+                    type="text"
+                    name="testupdatedBy"
+                    placeholder="Updated by"
+                    value={updatedBy}
+                    onChange={handleUpdatedBy}
+                    />
+                </div>
+
                 <input type="submit" />
             </form>
+            <div>
+                {testList?.map((item, index) => (
+                    <div key={index}>
+                        {item.Device}
+                        <button id={item._id} onClick={deleteDevice}>x</button>
+                    </div>
+                )
+                )}
+            </div>
         </div>
     </div>
   )
