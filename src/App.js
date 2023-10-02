@@ -1,11 +1,17 @@
 import './App.css';
-import { Demo } from './Demo';
+import { HomePage } from './HomePage';
+import { FormPage } from './FormPage';
+import { DataProvider } from './dataContext';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Demo />
+        <DataProvider>
+          {/*<HomePage />*/}
+          <FormPage />
+          {/*<Demo /> */}
+        </DataProvider>
       </header>
     </div>
   );
