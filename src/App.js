@@ -10,7 +10,6 @@ function App() {
         <DataProvider>
           {/*<HomePage />*/}
           <FormPage />
-          {/*<Demo /> */}
         </DataProvider>
       </header>
     </div>
