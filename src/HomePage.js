@@ -14,6 +14,7 @@ export const HomePage = () => {
       <h1>Algorithm Allies Team 6</h1> 
       <h2>Device List:</h2>   
       <div className="container">
+
         {testList?.map((item, index) => (
           <div key={index} className="item-box">
             {item.Device}
@@ -23,6 +24,4 @@ export const HomePage = () => {
       </div>
     </div>
   )
-
 };
-
