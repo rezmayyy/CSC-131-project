@@ -7,22 +7,16 @@ export const { client } = vendiaClient();
 
 export const HomePage = () => {
 
-  // const [device, setDevice] = useState('')
-  // const [testID, setTestID] = useState(0)
-  // const [testList, setTestList] = useState()
-
-  // const {device, testID, testList} = useContext(DataContext);
-  // const [stateDevice, setStateDevice] = device;
-  // const [stateTestID, setStateTestID] = testID;
-  // const [stateTestList, setStateTestList] = testList;
-  const [testList,setTestList] = useContext(DataContext).testList
+  const testList = useContext(DataContext).testList[0]
 
   return (
     <div>
-      Algorithm Allies Team 6
-      <div>
+      <h1>Algorithm Allies Team 6</h1> 
+      <h2>Device List:</h2>   
+      <div className="container">
+
         {testList?.map((item, index) => (
-          <div key={index}>
+          <div key={index} className="item-box">
             {item.Device}
           </div>
         )
@@ -31,4 +25,3 @@ export const HomePage = () => {
     </div>
   )
 };
-
