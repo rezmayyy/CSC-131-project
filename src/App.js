@@ -1,7 +1,7 @@
-import './App.css';
-import { HomePage } from './HomePage';
-import { FormPage } from './FormPage';
-import { DataProvider } from './dataContext';
+import './styles/App.css';
+import { HomePage } from './pages/HomePage';
+import { FormPage } from './pages/FormPage';
+import { DataProvider } from './context/dataContext';
 
 function App() {
   return (

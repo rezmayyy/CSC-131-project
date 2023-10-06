@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useEffect, useState } from "react";
-import { vendiaClient } from './vendiaClient';
-import { DataContext } from './dataContext';
+import { vendiaClient } from '../vendiaClient';
+import { DataContext } from '../context/dataContext';
 
 const { client } = vendiaClient();
 
