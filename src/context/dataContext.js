@@ -1,8 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { vendiaClient } from './vendiaClient';
-import { FormPage } from './FormPage';
-import { HomePage } from './HomePage';
+import { vendiaClient } from '../vendiaClient';
+import { FormPage } from '../pages/FormPage';
+import { HomePage } from '../pages/HomePage';
 
 export const { client } = vendiaClient();
 
