@@ -7,7 +7,7 @@ export const { client } = vendiaClient();
 
 export const HomePage = () => {
 
-  const testList = useContext(DataContext).testList[0]
+  const deviceList = useContext(DataContext).deviceList[0]
 
   return (
     <div>
@@ -15,7 +15,7 @@ export const HomePage = () => {
       <h2>Device List:</h2>   
       <div className="container">
 
-        {testList?.map((item, index) => (
+        {deviceList?.map((item, index) => (
           <div key={index} className="item-box">
             {item.Device}
           </div>

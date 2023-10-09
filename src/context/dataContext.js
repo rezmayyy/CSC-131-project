@@ -10,7 +10,10 @@ export const DataContext = React.createContext()
 
 export const DataProvider = ({ children }) => {
 
+  // data for both test and device
   const [device, setDevice] = useState('');
+
+  // test data
   const [testID, setTestID] = useState(0);
   const [testList, setTestList] = useState();
   const [orgAssignment, setOrgAssignment] = useState('');
@@ -20,13 +23,22 @@ export const DataProvider = ({ children }) => {
   const [completed, setCompleted] = useState(false);
   const [updatedBy, setUpdatedBy] = useState('');
 
+  // device data
+  const [status, setStatus] = useState('');
+  const [progress, setProgress] = useState(0);
+  const [deviceList, setDeviceList] = useState();
+
   useEffect(() => {
     const listTests = async () => {
       const listTestsResponse = await client.entities.test.list();
-      //console.log(listTestsResponse);
       setTestList(listTestsResponse?.items);
     }
+    const listDevice = async () => {
+      const listDeviceResponse = await client.entities.device.list();
+      setDeviceList(listDeviceResponse?.items)
+    }
     listTests();
+    listDevice();
   }, [])
 
   // function to add device based on schema
@@ -57,13 +69,13 @@ export const DataProvider = ({ children }) => {
         testMethod: [testMethod, setTestMethod],
         notes: [notes, setNotes],
         completed: [completed, setCompleted],
-        updatedBy: [updatedBy, setUpdatedBy]
+        updatedBy: [updatedBy, setUpdatedBy],
+        status: [status, setStatus],
+        progress: [progress, setProgress],
+        deviceList: [deviceList, setDeviceList]
         }}>
         {children}
       </DataContext.Provider>
-      {/* <DataContext.Provider value = {testList}>
-            {children}
-        </DataContext.Provider> */}
     </div>
   )
 };
