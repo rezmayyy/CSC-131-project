@@ -8,8 +8,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <DataProvider>
-          {/*<HomePage />*/}
-          <FormPage />
+          <HomePage />
+          {/* <FormPage /> */}
         </DataProvider>
       </header>
     </div>

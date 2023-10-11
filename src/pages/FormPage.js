@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useEffect, useState } from "react";
 import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
+import { DeviceNameInput } from '../component/deviceNameInput';
 
 const { client } = vendiaClient();
 
@@ -75,10 +76,6 @@ export const FormPage = () => {
         }
     }
 
-    const handleDeviceChange = (event) => {
-        setDevice(event.target.value);
-    }
-
     const handletestIDChange = (event) => {
         setTestID(parseInt(event.target.value));
     }
@@ -133,15 +130,6 @@ export const FormPage = () => {
             Algorithm Allies Team 6
             <div>
                 <form autoComplete="off" onSubmit={handleSubmit}>
-                    <div>
-                        <input
-                            type="text"
-                            name="device"
-                            placeholder="Device Name..."
-                            value={device}
-                            onChange={handleDeviceChange}
-                        />
-                    </div>
                     <div>
                         <input
                             type="number"
