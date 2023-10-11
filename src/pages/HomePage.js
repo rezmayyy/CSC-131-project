@@ -11,6 +11,7 @@ export const HomePage = () => {
 
   const [deviceList, setDeviceList] = useContext(DataContext).deviceList
   const [device, setDevice] = useContext(DataContext).device
+  const [progress, setProgress] = useContext(DataContext).progress
 
   const addDevice = async () => {
     const checkDeviceName = await client.entities.device.list({
@@ -21,7 +22,7 @@ export const HomePage = () => {
         }
     })
 
-    if(checkDeviceName.items.length == 0){
+    if(checkDeviceName.items.length === 0){
       const addDeviceResponse = await client.entities.device.add({
           Device: device,
           Status: "active",
@@ -51,7 +52,7 @@ const refreshList = async () => {
         )}
         <div className="item-box">
           <DeviceNameInput />
-          <button  onClick={addDevice}>+</button>
+          <button onClick={addDevice}>+</button>
         </div>
       </div>
     </div>
