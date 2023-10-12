@@ -1,5 +1,3 @@
-directive @vendia_batch on MUTATION
-
 directive @vendia_transaction on MUTATION | QUERY
 
 enum Vendia_ModelAttributeTypes {
@@ -213,6 +211,75 @@ type Vendia_Meta_Erased {
   nodes: [String!]!
 }
 
+input Self_Device_ConditionInput_ {
+  Device: Vendia_ModelStringInput_
+  Progress: Vendia_ModelIntInput_
+  Status: Vendia_ModelStringInput_
+  _and: [Self_Device_ConditionInput_]
+  _or: [Self_Device_ConditionInput_]
+  _not: Self_Device_ConditionInput_
+}
+
+input Self_Device_FilterInput_ {
+  _owner: Vendia_ModelStringInput_
+  Device: Vendia_ModelStringInput_
+  Progress: Vendia_ModelIntInput_
+  Status: Vendia_ModelStringInput_
+  _and: [Self_Device_FilterInput_]
+  _or: [Self_Device_FilterInput_]
+  _not: Self_Device_FilterInput_
+}
+
+input Self_Device_OrderInput_ {
+  _id: Vendia_ModelSortDirection
+}
+
+type Self_Device {
+  _id: ID!
+  Device: String
+  Progress: Int
+  Status: String
+  _acl: [Vendia_Acl!]
+  _owner: String
+}
+
+type Self_Device_Result_ {
+  error: String
+  result: Self_Device
+}
+
+type Self_Device_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Self_Device
+}
+
+type Self_Device_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+type Self_Device_Connection_ {
+  _DeviceItems: [Self_Device]
+  nextToken: String
+}
+
+input Self_Device_Input_ {
+  Device: String
+  Progress: Int
+  Status: String
+}
+
+input Self_Device_UpdateInput_ {
+  Device: String
+  Progress: Int
+  Status: String
+}
+
+input Self_Device_PartialInput_ {
+  Device: String
+  Progress: Int
+  Status: String
+}
+
 input Self_Test_ConditionInput_ {
   Completed: Vendia_ModelBooleanInput_
   Device: Vendia_ModelStringInput_
@@ -375,6 +442,7 @@ input Vendia_Block_transactions_transactionsItem_actor_ConditionInput_ {
   roleId: Vendia_ModelStringInput_
   roleName: Vendia_ModelStringInput_
   roleVersion: Vendia_ModelStringInput_
+  contractTaskId: Vendia_ModelStringInput_
   _and: [Vendia_Block_transactions_transactionsItem_actor_ConditionInput_]
   _or: [Vendia_Block_transactions_transactionsItem_actor_ConditionInput_]
   _not: Vendia_Block_transactions_transactionsItem_actor_ConditionInput_
@@ -386,6 +454,7 @@ input Vendia_Block_transactions_transactionsItem_actor_FilterInput_ {
   roleId: Vendia_ModelStringInput_
   roleName: Vendia_ModelStringInput_
   roleVersion: Vendia_ModelStringInput_
+  contractTaskId: Vendia_ModelStringInput_
   _and: [Vendia_Block_transactions_transactionsItem_actor_FilterInput_]
   _or: [Vendia_Block_transactions_transactionsItem_actor_FilterInput_]
   _not: Vendia_Block_transactions_transactionsItem_actor_FilterInput_
@@ -397,6 +466,7 @@ type Vendia_Block_transactions_transactionsItem_actor {
   roleId: String
   roleName: String
   roleVersion: String
+  contractTaskId: String
 }
 
 type Vendia_Block_transactions_transactionsItem_actor_Result_ {
@@ -1840,6 +1910,7 @@ type Vendia_CDC_subscriptionPeriod_Delete_Transaction_Result_ {
 enum Vendia_Block_transactions_transactionsItem_actor_typeEnum {
   API_KEY
   API_CREDENTIALS
+  SMART_CONTRACT
   VENDIA_USER
   VENDIA_SYSTEM
   VENDIA_INTERNAL
@@ -3415,6 +3486,9 @@ input Vendia_Contract_InvokeInput_ {
 }
 
 type Query {
+  get_Device(id: ID!, version: Int, readMode: Vendia_ReadMode = NODE_COMMITTED): Self_Device
+  list_DeviceItems(filter: Self_Device_FilterInput_, readMode: Vendia_ReadMode = NODE_LEDGERED, order: [Self_Device_OrderInput_!], limit: Int, nextToken: String): Self_Device_Connection_
+  list_DeviceVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
   get_Test(id: ID!, version: Int, readMode: Vendia_ReadMode = NODE_COMMITTED): Self_Test
   list_TestItems(filter: Self_Test_FilterInput_, readMode: Vendia_ReadMode = NODE_LEDGERED, order: [Self_Test_OrderInput_!], limit: Int, nextToken: String): Self_Test_Connection_
   list_TestVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
@@ -3453,6 +3527,10 @@ type Query {
 }
 
 type Mutation {
+  add_Device(input: Self_Device_Input_!, aclInput: Vendia_Acls_Input_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Device_Transaction_Result_
+  put_Device(id: ID!, input: Self_Device_Input_!, condition: Self_Device_ConditionInput_, aclInput: Vendia_Acls_Input_!, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Device_Transaction_Result_
+  update_Device(id: ID!, input: Self_Device_UpdateInput_!, condition: Self_Device_ConditionInput_, aclInput: Vendia_Acls_Input_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Device_Transaction_Result_
+  remove_Device(id: ID!, condition: Self_Device_ConditionInput_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Device_Delete_Transaction_Result_
   add_Test(input: Self_Test_Input_!, aclInput: Vendia_Acls_Input_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Test_Transaction_Result_
   put_Test(id: ID!, input: Self_Test_Input_!, condition: Self_Test_ConditionInput_, aclInput: Vendia_Acls_Input_!, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Test_Transaction_Result_
   update_Test(id: ID!, input: Self_Test_UpdateInput_!, condition: Self_Test_ConditionInput_, aclInput: Vendia_Acls_Input_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Test_Transaction_Result_
@@ -3484,6 +3562,10 @@ type Mutation {
 }
 
 type Subscription {
+  onAdd_Device: Self_Device_Result_
+  onUpdate_Device: Self_Device_Result_
+  onPut_Device: Self_Device_Result_
+  onRemove_Device: Self_Device_Result_
   onAdd_Test: Self_Test_Result_
   onUpdate_Test: Self_Test_Result_
   onPut_Test: Self_Test_Result_
@@ -3588,6 +3670,7 @@ input Vendia_Block_transactions_transactionsItem_actor_Input_ {
   roleId: String
   roleName: String
   roleVersion: String
+  contractTaskId: String
 }
 
 input Vendia_Block_transactions_transactionsItem_actor_UpdateInput_ {
@@ -3596,6 +3679,7 @@ input Vendia_Block_transactions_transactionsItem_actor_UpdateInput_ {
   roleId: String
   roleName: String
   roleVersion: String
+  contractTaskId: String
 }
 
 input Vendia_Block_transactions_transactionsItem_actor_PartialInput_ {
@@ -3604,6 +3688,7 @@ input Vendia_Block_transactions_transactionsItem_actor_PartialInput_ {
   roleId: String
   roleName: String
   roleVersion: String
+  contractTaskId: String
 }
 
 input Vendia_Block__erasure_Input_ {

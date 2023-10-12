@@ -7,7 +7,10 @@ const { client } = vendiaClient();
 
 export const FormPage = () => {
 
+    // data for both test and device
     const [device, setDevice] = useContext(DataContext).device
+
+    // data for test
     const [testID, setTestID] = useContext(DataContext).testID
     const [testList, setTestList] = useContext(DataContext).testList
     const [orgAssignment, setOrgAssignment] = useContext(DataContext).orgAssignment
@@ -17,10 +20,15 @@ export const FormPage = () => {
     const [completed, setCompleted] = useContext(DataContext).completed
     const [updatedBy, setUpdatedBy] = useContext(DataContext).updatedBy
 
+    // data for device
+    const [status, setStatus] = useContext(DataContext).status;
+    const [progress, setProgress] = useContext(DataContext).progress;
+    const [deviceList, setDeviceList] = useContext(DataContext).deviceList;
+
     // function to add device based on schema
     // need Device, TestID, OrgAssignment, TestName, Notes, Completed, UpdatedBy
-    const addDevice = async () => {
-        const addDeviceResponse = await client.entities.test.add({
+    const addTest = async () => {
+        const addTestResponse = await client.entities.test.add({
             Device: device,
             TestID: testID,
             OrgAssignment: orgAssignment,
@@ -30,11 +38,26 @@ export const FormPage = () => {
             Completed: completed,
             UpdatedBy: updatedBy
         })
+
+        const checkDeviceName = await client.entities.device.list({
+            filter: {
+                Device: {
+                    contains: device
+                }
+            }
+        })
+
+        if(checkDeviceName.items.length == 0){
+            const addDeviceResponse = await client.entities.device.add({
+                Device: device,
+                Status: "active",
+                Progress: 0
+            })
+        }
         refreshList()
-        //console.log(addDeviceResponse)
     }
 
-    const updateDevice = async (event) => {
+    const updateTest = async (event) => {
         if (device !== "") {
             const updateDeviceResponse = await client.entities.test.update({
                 _id: event.target.id,
@@ -87,7 +110,7 @@ export const FormPage = () => {
     // when user clicks on submit call addDevice
     const handleSubmit = (event) => {
         event.preventDefault();
-        addDevice();
+        addTest();
     }
 
 
@@ -98,17 +121,18 @@ export const FormPage = () => {
         setTestList(listTestsResponse?.items);
     }
 
-    // When button is clicked remove the device
+    // When button is clicked remove the test
     // function to remove a device
-    const deleteDevice = async (event) => {
+    const deleteTest = async (event) => {
         const removeDeviceResponse = await client.entities.test.remove(event.target.id)
         refreshList()
     }
+
     return (
         <div>
             Algorithm Allies Team 6
             <div>
-                <form autocomplete="off" onSubmit={handleSubmit}>
+                <form autoComplete="off" onSubmit={handleSubmit}>
                     <div>
                         <input
                             type="text"
@@ -187,8 +211,8 @@ export const FormPage = () => {
                     {testList?.map((item, index) => (
                         <div key={index}>
                             {item.Device}
-                            <button id={item._id} onClick={deleteDevice}>x</button>
-                            <button id={item._id} onClick={updateDevice}>update</button>
+                            <button id={item._id} onClick={deleteTest}>x</button>
+                            <button id={item._id} onClick={updateTest}>update</button>
                         </div>
                     )
                     )}
