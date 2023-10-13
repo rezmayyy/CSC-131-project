@@ -2,7 +2,7 @@ import './styles/App.css';
 import { HomePage } from './pages/HomePage';
 import { FormPage } from './pages/FormPage';
 import { DataProvider } from './context/dataContext';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 
 function App() {
@@ -10,15 +10,13 @@ function App() {
     <div className="App">
       <header className="App-header">
         <DataProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route>
-                <Route index element={<HomePage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/form" element={<FormPage />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
+          <Routes>
+            <Route>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/form" element={<FormPage />} />
+            </Route>
+          </Routes>
+
         </DataProvider>
       </header>
     </div>
