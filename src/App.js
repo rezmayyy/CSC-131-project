@@ -16,7 +16,6 @@ function App() {
               <Route path="/form" element={<FormPage />} />
             </Route>
           </Routes>
-
         </DataProvider>
       </header>
     </div>
