@@ -4,13 +4,13 @@ import { vendiaClient } from '../vendiaClient';
 import { DataProvider, DataContext } from '../context/dataContext';
 import { Link } from 'react-router-dom';
 import { FormPage } from './FormPage';
+import { TestlistPage }  from './TestlistPage';
 
 export const { client } = vendiaClient();
 
 export const HomePage = () => {
 
   const deviceList = useContext(DataContext).deviceList[0]
-
   return (
     <div>
       <h1>Algorithm Allies Team 6</h1> 
@@ -21,7 +21,7 @@ export const HomePage = () => {
           <div key={index} className="item-box">
             {item.Device}
             {item.Progress}
-            <button><Link to="/form/:id" element={<FormPage />}>view test</Link></button>
+            <button><Link to="/testlist/:id" element={<TestlistPage />}>view test</Link></button>
           </div>
         )
         )}
