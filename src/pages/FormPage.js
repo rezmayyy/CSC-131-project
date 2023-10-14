@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useEffect, useState } from "react";
 import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
 import { DeviceNameDropDown } from '../component/deviceNameDropDown';
@@ -9,6 +8,7 @@ const { client } = vendiaClient();
 export const FormPage = () => {
 
     // data for both test and device
+    // eslint-disable-next-line
     const [device, setDevice] = useContext(DataContext).device
 
     // data for test
@@ -20,11 +20,6 @@ export const FormPage = () => {
     const [notes, setNotes] = useContext(DataContext).notes
     const [completed, setCompleted] = useContext(DataContext).completed
     const [updatedBy, setUpdatedBy] = useContext(DataContext).updatedBy
-
-    // data for device
-    const [status, setStatus] = useContext(DataContext).status;
-    const [progress, setProgress] = useContext(DataContext).progress;
-    const [deviceList, setDeviceList] = useContext(DataContext).deviceList;
 
     // function to add device based on schema
     // need Device, TestID, OrgAssignment, TestName, Notes, Completed, UpdatedBy
@@ -39,7 +34,7 @@ export const FormPage = () => {
             Completed: completed,
             UpdatedBy: updatedBy
         })
-
+        console.log(addTestResponse)
         updateDeviceProgress()
         refreshList()
     }
@@ -108,6 +103,7 @@ export const FormPage = () => {
     // function to remove a device
     const deleteTest = async (event) => {
         const removeDeviceResponse = await client.entities.test.remove(event.target.id)
+        console.log(removeDeviceResponse)
         refreshList()
     }
 
@@ -143,9 +139,9 @@ export const FormPage = () => {
 
         const updateProgressResponse = await client.entities.device.update({
             _id: response.items[0]._id,
-            Progress: parseInt((totalCompletedResponse.items.length / totalDeviceResponse.items.length) * 100)
+            Progress: parseInt((totalCompletedResponse.items.length / totalDeviceResponse.items.length) * 100) || 0
         })
-        console.log(device)
+        console.log(updateProgressResponse)
     }
 
     return (

@@ -1,5 +1,3 @@
-import { vendiaClient } from '../vendiaClient';
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
@@ -37,7 +35,7 @@ export const TestlistPage = () => {
       setRows(someObject)
     }
     getTestRows()
-  }, [])
+  })
 
   const columns = [
     { field: 'id', 

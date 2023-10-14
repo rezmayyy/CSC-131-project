@@ -3,7 +3,6 @@ import { DataContext } from "../context/dataContext"
 
 export const DeviceNameInput = () => {
     const [device, setDevice] = useContext(DataContext).device
-    const [deviceList, setDeviceList] = useContext(DataContext).deviceList
 
     const handleDeviceChange = (event) => {
         setDevice(event.target.value);
