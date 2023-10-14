@@ -115,7 +115,7 @@ export const FormPage = () => {
         const response = await client.entities.device.list({
             filter:{
                 Device:{
-                    eq: "device3"
+                    eq: device
                 }
             }
         })
@@ -123,7 +123,7 @@ export const FormPage = () => {
         const totalDeviceResponse = await client.entities.test.list({
             filter: {
                 Device: {
-                    eq: "device3"
+                    eq: device
                 }
             }
         })
@@ -131,7 +131,7 @@ export const FormPage = () => {
         const totalCompletedResponse = await client.entities.test.list({
             filter:{
                 Device: {
-                    eq: "device3"
+                    eq: device
                 },
                 _and:{
                     Completed:{
