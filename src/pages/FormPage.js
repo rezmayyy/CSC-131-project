@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useEffect, useState } from "react";
 import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
+import { DeviceNameDropDown } from '../component/deviceNameDropDown';
 
 const { client } = vendiaClient();
 
@@ -39,21 +40,7 @@ export const FormPage = () => {
             UpdatedBy: updatedBy
         })
 
-        const checkDeviceName = await client.entities.device.list({
-            filter: {
-                Device: {
-                    contains: device
-                }
-            }
-        })
-
-        if(checkDeviceName.items.length == 0){
-            const addDeviceResponse = await client.entities.device.add({
-                Device: device,
-                Status: "active",
-                Progress: 0
-            })
-        }
+        updateDeviceProgress()
         refreshList()
     }
 
@@ -73,10 +60,6 @@ export const FormPage = () => {
             console.log(updateDeviceResponse)
             refreshList()
         }
-    }
-
-    const handleDeviceChange = (event) => {
-        setDevice(event.target.value);
     }
 
     const handletestIDChange = (event) => {
@@ -128,19 +111,50 @@ export const FormPage = () => {
         refreshList()
     }
 
+    const updateDeviceProgress = async () => {
+        const response = await client.entities.device.list({
+            filter:{
+                Device:{
+                    eq:"device1"
+                }
+            }
+        })
+
+        const totalDeviceResponse = await client.entities.test.list({
+            filter: {
+                Device: {
+                    eq: "device1"
+                }
+            }
+        })
+
+        const totalCompletedResponse = await client.entities.test.list({
+            filter:{
+                Device: {
+                    eq: "device1"
+                },
+                _and:{
+                    Completed:{
+                        eq: true
+                    }
+                }
+            }
+        })
+
+        const updateProgressResponse = await client.entities.device.update({
+            _id: response.items[0]._id,
+            Progress: (totalCompletedResponse.items.length / totalDeviceResponse.items.length) * 100
+        })
+    }
+
     return (
         <div>
             Algorithm Allies Team 6
+            <button onClick={updateDeviceProgress}>test</button>
             <div>
                 <form autoComplete="off" onSubmit={handleSubmit}>
                     <div>
-                        <input
-                            type="text"
-                            name="device"
-                            placeholder="Device Name..."
-                            value={device}
-                            onChange={handleDeviceChange}
-                        />
+                        <DeviceNameDropDown />
                     </div>
                     <div>
                         <input
@@ -208,8 +222,8 @@ export const FormPage = () => {
                     <input type="submit" />
                 </form>
                 <div>
-                    {testList?.map((item, index) => (
-                        <div key={index}>
+                    {testList?.map((item) => (
+                        <div key={item._id}>
                             {item.Device}
                             <button id={item._id} onClick={deleteTest}>x</button>
                             <button id={item._id} onClick={updateTest}>update</button>
