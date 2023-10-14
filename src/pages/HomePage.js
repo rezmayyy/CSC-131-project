@@ -1,7 +1,11 @@
 import React from 'react';
 import { useEffect, useContext } from "react";
+import { useParams } from 'react-router-dom';
 import { vendiaClient } from '../vendiaClient';
 import { DataProvider, DataContext } from '../context/dataContext';
+import { Link } from 'react-router-dom';
+import { FormPage } from './FormPage';
+import { TestlistPage }  from './TestlistPage';
 import { DeviceNameInput } from '../component/deviceNameInput';
 
 
@@ -47,6 +51,10 @@ const refreshList = async () => {
         {deviceList?.map((item, index) => (
           <div key={index} className="item-box">
             {item.Device}
+            <br />
+            {item.Progress}%
+            <br />
+            <button><Link to={`/testlist/${item.Device}`}>view test</Link></button>
           </div>
         )
         )}
