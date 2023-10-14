@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useEffect, useState } from "react";
 import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
-import { DeviceNameInput } from '../component/deviceNameInput';
+import { DeviceNameDropDown } from '../component/deviceNameDropDown';
 
 const { client } = vendiaClient();
 
@@ -154,7 +154,7 @@ export const FormPage = () => {
             <div>
                 <form autoComplete="off" onSubmit={handleSubmit}>
                     <div>
-                        <DeviceNameInput />
+                        <DeviceNameDropDown />
                     </div>
                     <div>
                         <input
