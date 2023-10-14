@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useContext } from "react";
+import { useParams } from 'react-router-dom';
 import { vendiaClient } from '../vendiaClient';
 import { DataProvider, DataContext } from '../context/dataContext';
 import { Link } from 'react-router-dom';
@@ -20,8 +21,10 @@ export const HomePage = () => {
         {deviceList?.map((item, index) => (
           <div key={index} className="item-box">
             {item.Device}
-            {item.Progress}
-            <button><Link to="/testlist/:id" element={<TestlistPage />}>view test</Link></button>
+            <br />
+            {item.Progress}%
+            <br />
+            <button><Link to={`/testlist/${item.Device}`}>view test</Link></button>
           </div>
         )
         )}

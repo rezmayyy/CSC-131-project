@@ -15,7 +15,7 @@ function App() {
             <Route>
               <Route path="/" element={<HomePage />} />
               <Route path="/form" element={<FormPage />} />
-              <Route path="/testlist" element={<TestlistPage />} />
+              <Route path="/testlist/:deviceName" element={<TestlistPage />} />
             </Route>
           </Routes>
         </DataProvider>
