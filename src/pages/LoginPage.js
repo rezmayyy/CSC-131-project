@@ -1,11 +1,14 @@
 import { auth } from "../configuration/firebase";
-import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useEffect } from "react"; 
+import { useNavigate } from "react-router";
 
 export const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -17,9 +20,10 @@ export const LoginPage = () => {
 
     const signIn = async () => {
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, email, password);
             setEmail("");
             setPassword("");
+            navigate("/");
         } catch(err) {
             console.error(err);
         }
