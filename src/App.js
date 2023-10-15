@@ -17,10 +17,10 @@ function App() {
           <Routes>
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/form" element={<FormPage />} />
-            <Route path="/testlist/:deviceName" element={<TestlistPage />} />
             <Route path="/" element={<Protected />} >
               <Route path="/" index element={<HomePage />} />
+              <Route path="/form" element={<FormPage />} />
+              <Route path="/testlist/:deviceName" element={<TestlistPage />} />
             </Route>
           </Routes>
         </DataProvider>
