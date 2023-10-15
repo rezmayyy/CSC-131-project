@@ -1,6 +1,6 @@
 import { auth } from "../configuration/firebase";
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export const LoginPage = () => {
@@ -20,11 +20,14 @@ export const LoginPage = () => {
 
     const signIn = async () => {
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user
+            localStorage.setItem('token', user.accessToken);
+            localStorage.setItem('user', JSON.stringify(user));
             setEmail("");
             setPassword("");
             navigate("/");
-        } catch(err) {
+        } catch (err) {
             console.error(err);
         }
     };
@@ -32,23 +35,25 @@ export const LoginPage = () => {
     const logout = async () => {
         try {
             await signOut(auth);
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
         } catch (err) {
             console.error(err);
         }
     };
 
-    return ( 
+    return (
         <div>
-            <input 
+            <input
                 placeholder="Email..."
-                value={email} 
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            
-            <input 
-                placeholder="Password..." 
+
+            <input
+                placeholder="Password..."
                 type="password"
-                value={password} 
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button onClick={signIn}> Sign In</button>
