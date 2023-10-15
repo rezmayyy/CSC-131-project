@@ -1,18 +1,22 @@
 import './styles/App.css';
 import { HomePage } from './pages/HomePage';
 import { FormPage } from './pages/FormPage';
-import { LoginPage } from './pages/LoginPage';
-
 import { DataProvider } from './context/dataContext';
+import { Routes, Route } from 'react-router-dom'
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <DataProvider>
-          {/*<HomePage />*/}
-          {/*<FormPage />*/}
-          <LoginPage />
+          <Routes>
+            <Route>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/form" element={<FormPage />} />
+              <Route path="/testlist/:deviceName" element={<TestlistPage />} />
+            </Route>
+          </Routes>
         </DataProvider>
       </header>
     </div>

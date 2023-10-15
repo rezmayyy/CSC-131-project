@@ -1,8 +1,8 @@
-import { auth } from "../config/firebase";
+import { auth } from "../configuration/firebase";
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react"; 
 
-export const Auth = () => {
+export const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [user, setUser] = useState(null);

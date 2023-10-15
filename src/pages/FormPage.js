@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-import { useEffect, useState } from "react";
 import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
+import { DeviceNameDropDown } from '../component/deviceNameDropDown';
 
 const { client } = vendiaClient();
 
 export const FormPage = () => {
 
     // data for both test and device
+    // eslint-disable-next-line
     const [device, setDevice] = useContext(DataContext).device
 
     // data for test
@@ -19,11 +20,6 @@ export const FormPage = () => {
     const [notes, setNotes] = useContext(DataContext).notes
     const [completed, setCompleted] = useContext(DataContext).completed
     const [updatedBy, setUpdatedBy] = useContext(DataContext).updatedBy
-
-    // data for device
-    const [status, setStatus] = useContext(DataContext).status;
-    const [progress, setProgress] = useContext(DataContext).progress;
-    const [deviceList, setDeviceList] = useContext(DataContext).deviceList;
 
     // function to add device based on schema
     // need Device, TestID, OrgAssignment, TestName, Notes, Completed, UpdatedBy
@@ -38,22 +34,8 @@ export const FormPage = () => {
             Completed: completed,
             UpdatedBy: updatedBy
         })
-
-        const checkDeviceName = await client.entities.device.list({
-            filter: {
-                Device: {
-                    contains: device
-                }
-            }
-        })
-
-        if(checkDeviceName.items.length == 0){
-            const addDeviceResponse = await client.entities.device.add({
-                Device: device,
-                Status: "active",
-                Progress: 0
-            })
-        }
+        console.log(addTestResponse)
+        updateDeviceProgress()
         refreshList()
     }
 
@@ -73,10 +55,6 @@ export const FormPage = () => {
             console.log(updateDeviceResponse)
             refreshList()
         }
-    }
-
-    const handleDeviceChange = (event) => {
-        setDevice(event.target.value);
     }
 
     const handletestIDChange = (event) => {
@@ -125,22 +103,55 @@ export const FormPage = () => {
     // function to remove a device
     const deleteTest = async (event) => {
         const removeDeviceResponse = await client.entities.test.remove(event.target.id)
+        console.log(removeDeviceResponse)
         refreshList()
+    }
+
+    const updateDeviceProgress = async () => {
+        const response = await client.entities.device.list({
+            filter:{
+                Device:{
+                    eq: device
+                }
+            }
+        })
+
+        const totalDeviceResponse = await client.entities.test.list({
+            filter: {
+                Device: {
+                    eq: device
+                }
+            }
+        })
+
+        const totalCompletedResponse = await client.entities.test.list({
+            filter:{
+                Device: {
+                    eq: device
+                },
+                _and:{
+                    Completed:{
+                        eq: true
+                    }
+                }
+            }
+        })
+
+        const updateProgressResponse = await client.entities.device.update({
+            _id: response.items[0]._id,
+            Progress: parseInt((totalCompletedResponse.items.length / totalDeviceResponse.items.length) * 100) || 0
+        })
+        console.log(updateProgressResponse)
     }
 
     return (
         <div>
             Algorithm Allies Team 6
+            <button onClick={updateDeviceProgress}>test</button>
             <div>
                 <form autoComplete="off" onSubmit={handleSubmit}>
                     <div>
-                        <input
-                            type="text"
-                            name="device"
-                            placeholder="Device Name..."
-                            value={device}
-                            onChange={handleDeviceChange}
-                        />
+                        <DeviceNameDropDown />
                     </div>
                     <div>
                         <input
@@ -208,8 +219,8 @@ export const FormPage = () => {
                     <input type="submit" />
                 </form>
                 <div>
-                    {testList?.map((item, index) => (
-                        <div key={index}>
+                    {testList?.map((item) => (
+                        <div key={item._id}>
                             {item.Device}
                             <button id={item._id} onClick={deleteTest}>x</button>
                             <button id={item._id} onClick={updateTest}>update</button>
