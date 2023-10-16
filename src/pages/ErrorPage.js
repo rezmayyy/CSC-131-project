@@ -4,6 +4,7 @@ import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
 import { Link } from 'react-router-dom';
 import { DeviceNameInput } from '../component/deviceNameInput';
+import '../styles/App.css';
 
 
 export const { client } = vendiaClient();
