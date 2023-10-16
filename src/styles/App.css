@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -14,12 +15,10 @@
 }
 
 .App-header {
-  background-color: midnightblue;
+  background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 /* Outline for text, idk i thought it would be cool but it hurts my eyes */
@@ -30,7 +29,7 @@
   -webkit-text-stroke: 2px darkslategrey;
 }
 */
-
+/*
 .App-link {
   color: #61dafb;
 }
@@ -45,24 +44,64 @@
 
   
 }
-
+*/
 .container {
   display: flex;
-  flex-direction: row;
+  /*flex-direction: row;*/
   flex-wrap: wrap;
-  background-color:cornflowerblue;
-  border: 7px solid rebeccapurple;
+  justify-content: space-evenly left;
+  align-items: center;
+  background-color:#e0e0e0;
+  border: 7px solid #f9f9f9;
   margin: 0px auto;
-  width: 55%;
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+  padding-top: 2%;
   border-radius: 10px;
+  column-gap: 20px;
+  
 }
 
 .item-box {
   box-sizing: border-box;
-  width: 50%;
-  border: 2px solid #ccc; 
-  padding: 10px;
+  width: calc(50% - 10px);  height: auto;
+  background-color: #ffffff;
+  border: 1px solid #000; 
+  padding-top: 2%;
+  padding-bottom: 2%;
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
+}
+
+.progress-bar-container{
+  width: 40%;
+  margin: 10px;
+  border: 10px;
+  padding: auto;
+}
+
+.item-device-homepage{
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: large;
+  font-weight: 600;
+}
+
+#title-name{
+  padding-top: 2%;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  font-size: xx-large;
+}
+
+#subtitle-name{
+  padding: 2%;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
+  font-size: xx-large;
+}
+
+.test-list-data-table{
+  margin-top: 4%;
 }

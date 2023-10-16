@@ -1,4 +1,7 @@
 import React from 'react';
+import '../styles/App.css';
+import { Button, ProgressBar } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useContext } from "react";
 import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
@@ -41,17 +44,23 @@ export const HomePage = () => {
 
   return (
     <div>
-      <h1>Algorithm Allies Team 6</h1>
-      <h2>Device List:</h2>
+      <div><h1 id="title-name">Algorithm Allies Team 6</h1></div>
+      <div><h2 id="subtitle-name">Device List:</h2></div>
       <div className="container">
-
         {deviceList?.map((item, index) => (
           <div key={index} className="item-box">
-            {item.Device}
+            <div className="item-device-homepage">
+              {item.Device}
+            </div>
             <br />
-            {item.Progress}%
+            <div className="progress-bar-container">
+              <ProgressBar now={item.Progress} label={`${item.Progress}%`} />
+            </div>
             <br />
-            <button><Link to={`/testlist/${item.Device}`}>view test</Link></button>
+            {/*<Button variant="secondary"><Link to={`/testlist/${item.Device}`}> view test </Link></Button>*/}
+            <Link to={`/testlist/${item.Device}`} className="custom-link">
+              <Button variant="secondary">View Test</Button>
+            </Link>
           </div>
         )
         )}

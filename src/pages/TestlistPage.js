@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { client } from '../context/dataContext';
 import { Container } from '@mui/material';
+import '../styles/App.css';
+import { Button, ProgressBar } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const TestlistPage = () => {
 
@@ -40,7 +43,7 @@ export const TestlistPage = () => {
   const columns = [
     { field: 'id', 
       headerName: 'TestID', 
-      width: 90 },
+      width: 90},
     {
       field: 'device',
       headerName: 'Device',
@@ -83,27 +86,81 @@ export const TestlistPage = () => {
       width: 150,
       editable: true,
     },
+    {
+      field: 'actions',
+      type: 'actions',
+      width: 150,
+      editable: true,
+      type: 'singleSelect',
+      valueOptions: ['Market', 'Finance', 'Development'],
+      /*
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon />}
+              label="Save"
+              sx={{
+                color: 'primary.main',
+              }}
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      },*/
+    },
+
   ];
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
-      <Container>
+    <div className="test-list-page">
+      <h1 id="title-name">Test List</h1>
+      <div className="test-list-data">
+        <Box sx={{ height: 400, width: '100%', borderColor: 'primary.dark', '& .MuiDataGrid-cell:hover': {color: 'primary.main'} }} >
+          <Container>
 
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
-        checkboxSelection
-        disableRowSelectionOnClick
-        />
-        </Container>
-    </Box>
+          <DataGrid className='test-list-data-table'
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 5,
+                },
+              },
+            }}
+            pageSizeOptions={[5]}
+            checkboxSelection
+            disableRowSelectionOnClick
+            />
+            </Container>
+        </Box>
+      </div>
+    </div>
   );
 }
