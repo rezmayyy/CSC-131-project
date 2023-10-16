@@ -72,7 +72,7 @@ export const HomePage = () => {
         )
         )}
         <div className="item-box">
-          <DeviceNameInput id="add-device-text"/>
+          <DeviceNameInput id="add-device-input"/>
           <Button id="add-device-button" variant="primary" onClick={addDevice}>+</Button>
         </div>
       </div>

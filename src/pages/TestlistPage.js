@@ -47,13 +47,13 @@ export const TestlistPage = () => {
     {
       field: 'device',
       headerName: 'Device',
-      width: 150,
+      width: 120,
       editable: true,
     },
     {
       field: 'orgassignment',
       headerName: 'OrgAssignment',
-      width: 110,
+      width: 150,
       editable: true,
     },
     {
@@ -139,7 +139,8 @@ export const TestlistPage = () => {
 
   return (
     <div className="test-list-page">
-      <h1 id="title-name">Test List</h1>
+      <div><h1 className="title-header">Algorithm Allies Team 6</h1></div>
+      <div><h2 id="subtitle-name">Test List for: {deviceName}</h2></div>
       <div className="test-list-data">
         <Box sx={{ height: 400, width: '100%', borderColor: 'primary.dark', '& .MuiDataGrid-cell:hover': {color: 'primary.main'} }} >
           <Container>
