@@ -3,6 +3,8 @@ import { HomePage } from './pages/HomePage';
 import { TestlistPage } from './pages/TestlistPage';
 import { LoginPage } from './pages/LoginPage';
 import { FormPage } from './pages/FormPage';
+import { TestlistPage }  from './pages/TestlistPage';
+import { ErrorPage } from './pages/ErrorPage';
 import { DataProvider } from './context/dataContext';
 import { Routes, Route } from 'react-router-dom';
 import { SignUpPage } from './pages/SignUpPage';
@@ -21,6 +23,7 @@ function App() {
               <Route path="/" index element={<HomePage />} />
               <Route path="/form" element={<FormPage />} />
               <Route path="/testlist/:deviceName" element={<TestlistPage />} />
+              <Route path="*" element={<ErrorPage />} />
             </Route>
           </Routes>
         </DataProvider>
