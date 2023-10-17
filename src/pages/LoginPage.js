@@ -1,3 +1,6 @@
+import '../styles/App.css';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from "../configuration/firebase";
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useEffect } from "react";
@@ -44,25 +47,34 @@ export const LoginPage = () => {
 
     return (
         <div>
-            <input
-                placeholder="Email..."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <input
-                placeholder="Password..."
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={signIn}> Sign In</button>
-            <button onClick={logout}> Logout </button>
-            {user ? (
-                <p>You are logged in as {user.email}</p>
-            ) : (
-                <p>You are not logged in</p>
-            )}
+            <div><h1 className="title-header">Algorithm Allies Team 6</h1></div>
+            <div><h2 id="subtitle-name">Login Page</h2></div>
+            <div className="signup-page-content">
+            <div className="general-input-box">
+                <input
+                    placeholder="Email..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+            </div>
+            <div className="general-input-box">
+                <input
+                    placeholder="Password..."
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
+            <Button variant="secondary" className="signup-button" onClick={signIn}> Sign In</Button>
+            <Button variant="secondary" className="signup-button" onClick={logout}> Logout </Button>
+            <div className="general-div">
+                {user ? (
+                    <p>You are logged in as {user.email}</p>
+                ) : (
+                    <p>You are not logged in</p>
+                )}
+            </div>
+            </div>
         </div>
     );
 };
