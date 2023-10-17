@@ -105,3 +105,8 @@
 .test-list-data-table{
   margin-top: 4%;
 }
+
+.error-page-style {
+  background-color: black;
+  color: darkred;
+}

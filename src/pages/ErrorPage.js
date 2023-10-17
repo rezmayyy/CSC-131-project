@@ -11,9 +11,9 @@ export const { client } = vendiaClient();
 export const ErrorPage = () => {
 
     return (
-        <div>
+        <div className='error-page-style'>
             <h1>Algorithm Allies Team 6</h1>
-            <h2>Error404 </h2>
+            <h2>Error404: Page not found</h2>
         </div>
     )
 };
