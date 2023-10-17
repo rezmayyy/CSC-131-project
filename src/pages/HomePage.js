@@ -44,8 +44,16 @@ export const HomePage = () => {
 
   return (
     <div>
-      <div><h1 id="title-name">Algorithm Allies Team 6</h1></div>
+      <div><h1 className="title-header"><img src="AlgorithmAlliesLogo.png"/>Algorithm Allies Team 6</h1></div>
       <div><h2 id="subtitle-name">Device List:</h2></div>
+      <div id="search-for-device">
+        <input id="search-for-device-input"
+          type="text"
+          name="deviceName"
+          placeholder="Device Name"
+        />
+        <Button id="search-for-device-button" variant="primary">Search</Button>
+      </div>
       <div className="container">
         {deviceList?.map((item, index) => (
           <div key={index} className="item-box">
@@ -57,16 +65,15 @@ export const HomePage = () => {
               <ProgressBar now={item.Progress} label={`${item.Progress}%`} />
             </div>
             <br />
-            {/*<Button variant="secondary"><Link to={`/testlist/${item.Device}`}> view test </Link></Button>*/}
             <Link to={`/testlist/${item.Device}`} className="custom-link">
-              <Button variant="secondary">View Test</Button>
+              <Button className="button-shadow-effects" variant="secondary">View Test</Button>
             </Link>
           </div>
         )
         )}
         <div className="item-box">
-          <DeviceNameInput />
-          <button onClick={addDevice}>+</button>
+          <DeviceNameInput id="add-device-input"/>
+          <Button id="add-device-button" variant="primary" onClick={addDevice}>+</Button>
         </div>
       </div>
     </div>

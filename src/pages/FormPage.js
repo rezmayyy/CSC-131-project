@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
 import { DeviceNameDropDown } from '../component/deviceNameDropDown';
+import '../styles/App.css';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const { client } = vendiaClient();
 
@@ -146,14 +149,19 @@ export const FormPage = () => {
 
     return (
         <div>
-            Algorithm Allies Team 6
-            <button onClick={updateDeviceProgress}>test</button>
+            <div><h1 className="title-header">Algorithm Allies Team 6</h1></div>
+            <div><h2 id="subtitle-name">Form Page: add a Test</h2></div>
+            <div className="general-div">
+                <Button className="general-buttons" variant="secondary" onClick={updateDeviceProgress}>Test</Button>
+            </div>
             <div>
                 <form autoComplete="off" onSubmit={handleSubmit}>
-                    <div>
+                    <div className="general-div">
+                        <h5>Choose a device: </h5>
                         <DeviceNameDropDown />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Test number: </h5>
                         <input
                             type="number"
                             pattern="[0-9]*"
@@ -162,7 +170,8 @@ export const FormPage = () => {
                             onChange={handletestIDChange}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Organization name: </h5>
                         <input
                             type="text"
                             name="orgAssignment"
@@ -171,7 +180,8 @@ export const FormPage = () => {
                             onChange={handleOrgAssignmentChange}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Test name:</h5>
                         <input
                             type="text"
                             name="testName"
@@ -180,7 +190,8 @@ export const FormPage = () => {
                             onChange={handleTestNameChange}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Test Method: </h5>
                         <input
                             type="text"
                             name="testMethod"
@@ -189,7 +200,8 @@ export const FormPage = () => {
                             onChange={handleTestMethod}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Testing notes: </h5>
                         <input
                             type="text"
                             name="testNotes"
@@ -198,7 +210,8 @@ export const FormPage = () => {
                             onChange={handleNotes}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Mark: </h5>
                         <input
                             type="checkbox"
                             value={completed}
@@ -206,7 +219,8 @@ export const FormPage = () => {
                         />
                         <span>Completed</span>
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Your name: </h5>
                         <input
                             type="text"
                             name="testupdatedBy"
@@ -218,12 +232,12 @@ export const FormPage = () => {
 
                     <input type="submit" />
                 </form>
-                <div>
+                <div className="device-number-div">
                     {testList?.map((item) => (
                         <div key={item._id}>
-                            {item.Device}
-                            <button id={item._id} onClick={deleteTest}>x</button>
-                            <button id={item._id} onClick={updateTest}>update</button>
+                            {item.Device}:
+                            <Button className="delete-device-button" variant="secondary" id={item._id} onClick={deleteTest}>x</Button>
+                            <Button className="update-device-button" variant="secondary" id={item._id} onClick={updateTest}>update</Button>
                         </div>
                     )
                     )}
