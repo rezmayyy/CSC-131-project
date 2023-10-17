@@ -52,6 +52,17 @@
   box-shadow: 0 0 11px rgba(33,33,33,.2); 
   padding: auto !important;
 }
+.general-input-box{
+  margin: 5px;
+  border: 2px black;
+  padding: 5px 10px;
+  transition-duration: .5s;
+  transition-property: box-shadow, transform;
+}
+.general-input-box:hover{
+  box-shadow: 0 0 5px black; 
+}
+
 
 .container {
   display: flex;
@@ -226,4 +237,30 @@
   color: rgb(46, 46, 46);
   padding-top: 10px;
   padding-bottom: 50px;
+}
+
+.signup-page-content {
+  margin: auto;
+  padding: 10px;
+  border: 5px solid black;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(175, 175, 175) !important;
+  width: fit-content;
+}
+.signup-button {
+  padding: 3px;
+  margin: 3px;
+  background-color: rgb(44, 44, 44) !important;
+  border: 0 !important;
+  transition-property: box-shadow, transform;
+}
+.signup-button:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+  transform: scale(1.07) !important; 
+  background-color: rgb(42, 124, 247) !important;
 }
