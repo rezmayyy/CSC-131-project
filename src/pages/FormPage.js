@@ -1,13 +1,17 @@
 import React, { useContext } from 'react';
-import { useEffect, useState } from "react";
 import { vendiaClient } from '../vendiaClient';
 import { DataContext } from '../context/dataContext';
+import { DeviceNameDropDown } from '../component/deviceNameDropDown';
+import '../styles/App.css';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const { client } = vendiaClient();
 
 export const FormPage = () => {
 
     // data for both test and device
+    // eslint-disable-next-line
     const [device, setDevice] = useContext(DataContext).device
 
     // data for test
@@ -19,11 +23,6 @@ export const FormPage = () => {
     const [notes, setNotes] = useContext(DataContext).notes
     const [completed, setCompleted] = useContext(DataContext).completed
     const [updatedBy, setUpdatedBy] = useContext(DataContext).updatedBy
-
-    // data for device
-    const [status, setStatus] = useContext(DataContext).status;
-    const [progress, setProgress] = useContext(DataContext).progress;
-    const [deviceList, setDeviceList] = useContext(DataContext).deviceList;
 
     // function to add device based on schema
     // need Device, TestID, OrgAssignment, TestName, Notes, Completed, UpdatedBy
@@ -38,22 +37,8 @@ export const FormPage = () => {
             Completed: completed,
             UpdatedBy: updatedBy
         })
-
-        const checkDeviceName = await client.entities.device.list({
-            filter: {
-                Device: {
-                    contains: device
-                }
-            }
-        })
-
-        if(checkDeviceName.items.length == 0){
-            const addDeviceResponse = await client.entities.device.add({
-                Device: device,
-                Status: "active",
-                Progress: 0
-            })
-        }
+        console.log(addTestResponse)
+        updateDeviceProgress()
         refreshList()
     }
 
@@ -73,10 +58,6 @@ export const FormPage = () => {
             console.log(updateDeviceResponse)
             refreshList()
         }
-    }
-
-    const handleDeviceChange = (event) => {
-        setDevice(event.target.value);
     }
 
     const handletestIDChange = (event) => {
@@ -125,24 +106,62 @@ export const FormPage = () => {
     // function to remove a device
     const deleteTest = async (event) => {
         const removeDeviceResponse = await client.entities.test.remove(event.target.id)
+        console.log(removeDeviceResponse)
         refreshList()
+    }
+
+    const updateDeviceProgress = async () => {
+        const response = await client.entities.device.list({
+            filter:{
+                Device:{
+                    eq: device
+                }
+            }
+        })
+
+        const totalDeviceResponse = await client.entities.test.list({
+            filter: {
+                Device: {
+                    eq: device
+                }
+            }
+        })
+
+        const totalCompletedResponse = await client.entities.test.list({
+            filter:{
+                Device: {
+                    eq: device
+                },
+                _and:{
+                    Completed:{
+                        eq: true
+                    }
+                }
+            }
+        })
+
+        const updateProgressResponse = await client.entities.device.update({
+            _id: response.items[0]._id,
+            Progress: parseInt((totalCompletedResponse.items.length / totalDeviceResponse.items.length) * 100) || 0
+        })
+        console.log(updateProgressResponse)
     }
 
     return (
         <div>
-            Algorithm Allies Team 6
+            <div><h1 className="title-header">Algorithm Allies Team 6</h1></div>
+            <div><h2 id="subtitle-name">Form Page: add a Test</h2></div>
+            <div className="general-div">
+                <Button className="general-buttons" variant="secondary" onClick={updateDeviceProgress}>Test</Button>
+            </div>
             <div>
                 <form autoComplete="off" onSubmit={handleSubmit}>
-                    <div>
-                        <input
-                            type="text"
-                            name="device"
-                            placeholder="Device Name..."
-                            value={device}
-                            onChange={handleDeviceChange}
-                        />
+                    <div className="general-div">
+                        <h5>Choose a device: </h5>
+                        <DeviceNameDropDown />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Test number: </h5>
                         <input
                             type="number"
                             pattern="[0-9]*"
@@ -151,7 +170,8 @@ export const FormPage = () => {
                             onChange={handletestIDChange}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Organization name: </h5>
                         <input
                             type="text"
                             name="orgAssignment"
@@ -160,7 +180,8 @@ export const FormPage = () => {
                             onChange={handleOrgAssignmentChange}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Test name:</h5>
                         <input
                             type="text"
                             name="testName"
@@ -169,7 +190,8 @@ export const FormPage = () => {
                             onChange={handleTestNameChange}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Test Method: </h5>
                         <input
                             type="text"
                             name="testMethod"
@@ -178,7 +200,8 @@ export const FormPage = () => {
                             onChange={handleTestMethod}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Testing notes: </h5>
                         <input
                             type="text"
                             name="testNotes"
@@ -187,7 +210,8 @@ export const FormPage = () => {
                             onChange={handleNotes}
                         />
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Mark: </h5>
                         <input
                             type="checkbox"
                             value={completed}
@@ -195,7 +219,8 @@ export const FormPage = () => {
                         />
                         <span>Completed</span>
                     </div>
-                    <div>
+                    <div className="general-div">
+                        <h5>Your name: </h5>
                         <input
                             type="text"
                             name="testupdatedBy"
@@ -207,12 +232,12 @@ export const FormPage = () => {
 
                     <input type="submit" />
                 </form>
-                <div>
-                    {testList?.map((item, index) => (
-                        <div key={index}>
-                            {item.Device}
-                            <button id={item._id} onClick={deleteTest}>x</button>
-                            <button id={item._id} onClick={updateTest}>update</button>
+                <div className="device-number-div">
+                    {testList?.map((item) => (
+                        <div key={item._id}>
+                            {item.Device}:
+                            <Button className="delete-device-button" variant="secondary" id={item._id} onClick={deleteTest}>x</Button>
+                            <Button className="update-device-button" variant="secondary" id={item._id} onClick={updateTest}>update</Button>
                         </div>
                     )
                     )}

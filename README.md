@@ -9,6 +9,12 @@
 
 1. Git clone this repository after you have been added to collaborate
 
+### npm installs needed
+- `npm install react-router-dom`
+- `npm install @mui/x-data-grid`
+- `npm install -g @vendia/share-cli`
+- `npm install @vendia/client`
+
 ### After cloning do this steps on your terminal
 * need node to use npm commands
 1. `npm install -g @vendia/share-cli`
