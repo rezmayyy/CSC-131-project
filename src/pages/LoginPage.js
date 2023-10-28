@@ -27,9 +27,8 @@ export const LoginPage = () => {
             const user = userCredential.user
             localStorage.setItem('token', user.accessToken);
             localStorage.setItem('user', JSON.stringify(user));
-            setEmail("");
-            setPassword("");
-            navigate("/");
+            // setEmail("");
+            // setPassword("");
         } catch (err) {
             console.error(err);
         }
@@ -45,35 +44,44 @@ export const LoginPage = () => {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await signIn();
+        navigate("/");
+    }
+
     return (
         <div>
-            <div><h1 className="title-header">Algorithm Allies Team 6</h1></div>
-            <div><h2 id="subtitle-name">Login Page</h2></div>
+            <h1 className="title-header">Algorithm Allies Team 6</h1>
+            <h2 id="subtitle-name">Login Page</h2>
             <div className="signup-page-content">
-            <div className="general-input-box">
-                <input
-                    placeholder="Email..."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
-            <div className="general-input-box">
-                <input
-                    placeholder="Password..."
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <Button variant="secondary" className="signup-button" onClick={signIn}> Sign In</Button>
-            <Button variant="secondary" className="signup-button" onClick={logout}> Logout </Button>
-            <div className="general-div">
-                {user ? (
-                    <p>You are logged in as {user.email}</p>
-                ) : (
-                    <p>You are not logged in</p>
-                )}
-            </div>
+                <form onSubmit={handleSubmit}>
+
+                    <input
+                        placeholder="Email..."
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+
+
+                    <input
+                        placeholder="Password..."
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    { !user && <Button type="submit" variant="secondary" className="signup-button"> Sign In</Button>}
+                    { user && <Button type="button" variant="secondary" className="signup-button" onClick={logout}> Logout </Button>}
+                </form>
+
+                <div className="general-div">
+                    {user ? (
+                        <p>You are logged in as {user.email}</p>
+                    ) : (
+                        <p>You are not logged in</p>
+                    )}
+                </div>
             </div>
         </div>
     );

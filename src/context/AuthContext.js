@@ -9,6 +9,11 @@ export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
 
+  const adminUID = "JpOR5ShTBRf4x7zUTr8u8j5VR8Z2";
+  const orgAUID = "";
+  
+  
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
