@@ -6,7 +6,8 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 export const AuthContext = React.createContext()
 
 export const AuthProvider = ({ children }) => {
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
 
   const adminUID = "JpOR5ShTBRf4x7zUTr8u8j5VR8Z2";
@@ -21,9 +22,15 @@ export const AuthProvider = ({ children }) => {
 
     return () => unsubscribe();
   }, []);
+
+  const authValue = {
+    email: [email, setEmail],
+    password: [password, setPassword],
+    user: [user, setUser]
+  }
   return (
     <div>
-      <AuthContext.Provider value={user}>
+      <AuthContext.Provider value={authValue}>
         {children}
       </AuthContext.Provider>
     </div>

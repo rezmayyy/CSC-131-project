@@ -3,23 +3,15 @@ import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from "../configuration/firebase";
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from '../context/AuthContext';
 
 export const LoginPage = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [user, setUser] = useState(null);
+    const [email, setEmail] = useContext(AuthContext).email;
+    const [password, setPassword] = useContext(AuthContext).password;
+    const [user, setUser] = useContext(AuthContext).user;
     const navigate = useNavigate();
-
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setUser(user);
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     const signIn = async () => {
         try {

@@ -16,7 +16,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <AuthProvider>
-
           <DataProvider>
             <Routes>
               <Route path="/signup" element={<SignUpPage />} />
