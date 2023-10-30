@@ -32,7 +32,6 @@ export const SignUpPage = () => {
 
   return (
     <div>
-      <div><h1 className="title-header">Algorithm Allies Team 6</h1></div>
       <div><h2 id="subtitle-name">Signup Page</h2></div>
       <div className="signup-page-content">
         <p className="general-div">Please enter your email and a password</p>
