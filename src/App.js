@@ -16,8 +16,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <NavBar />
         <AuthProvider>
+          <NavBar />
           <DataProvider>
             <Routes>
               <Route path="/signup" element={<SignUpPage />} />

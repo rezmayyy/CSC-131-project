@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from "../configuration/firebase";
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 export const LoginPage = () => {
@@ -19,23 +19,15 @@ export const LoginPage = () => {
             const user = userCredential.user
             localStorage.setItem('token', user.accessToken);
             localStorage.setItem('user', JSON.stringify(user));
-            // setEmail("");
-            // setPassword("");
+            setEmail("");
+            setPassword("");
         } catch (err) {
             console.error(err);
         }
     };
 
-    const logout = async () => {
-        try {
-            await signOut(auth);
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
+    const logoutButton = useContext(AuthContext).logoutButton
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         await signIn();
@@ -63,14 +55,14 @@ export const LoginPage = () => {
                     />
 
                     { !user && <Button type="submit" variant="secondary" className="signup-button"> Sign In</Button>}
-                    { user && <Button type="button" variant="secondary" className="signup-button" onClick={logout}> Logout </Button>}
+                    { user && <Button type="button" variant="secondary" className="signup-button" onClick={logoutButton}> Logout </Button>}
                 </form>
 
                 <div className="general-div">
                     {user ? (
                         <p>You are logged in as {user.email}</p>
                     ) : (
-                        <p>You are not logged in</p>
+                        <p>You are not logged in. <Link to="/signup">Signup</Link></p>
                     )}
                 </div>
             </div>

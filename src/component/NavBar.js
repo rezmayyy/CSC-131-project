@@ -1,6 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { Button } from 'react-bootstrap';
 
 export const NavBar = () => {
+    const [user, setUser] = useContext(AuthContext).user;
+    const logoutButton = useContext(AuthContext).logoutButton
+
     const navigate = useNavigate();
 
     return (
@@ -14,7 +20,8 @@ export const NavBar = () => {
                     <h1>Algorithm Allies Team 6</h1>
                 </li>
                 <li>
-                    <Link to="/login">Login</Link>
+                    {!user && <Link to="/login">Login</Link>}
+                    {user && <Button onClick={logoutButton}>Logout</Button>}
                 </li>
             </ul>
         </div>
