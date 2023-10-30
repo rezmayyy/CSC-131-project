@@ -9,12 +9,14 @@ import { Routes, Route } from 'react-router-dom';
 import { SignUpPage } from './pages/SignUpPage';
 import { Protected } from './component/protected';
 import { AuthProvider } from './context/AuthContext';
+import { NavBar} from './component/NavBar'
 
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <NavBar />
         <AuthProvider>
           <DataProvider>
             <Routes>

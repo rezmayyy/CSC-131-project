@@ -44,7 +44,6 @@ export const LoginPage = () => {
 
     return (
         <div>
-            <h1 className="title-header">Algorithm Allies Team 6</h1>
             <h2 id="subtitle-name">Login Page</h2>
             <div className="signup-page-content">
                 <form onSubmit={handleSubmit}>
