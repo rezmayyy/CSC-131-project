@@ -8,7 +8,7 @@ export const DeviceNameDropDown = () => {
 
     useEffect(() => {
         setDevice("device1")
-      })
+      },[])
 
     const handleDeviceChange = (event) => {
         setDevice(event.target.value);

@@ -43,15 +43,23 @@ export const HomePage = () => {
   }
 
   const handleDelete = (event) => {
-    // setDevice(event.target.id.Device)
-    // deleteAllTest(event.target.id.Device)
-    // deleteDevice(event.target.id._id)
-    console.log(event.target.id)
+    setDevice(event.target.id) // Device
+    deleteAllTest(event.target.id)// Device
+    deleteDevice(event.target.id)
+    console.log(event)
 
   }
 
   const deleteDevice = async (value) => {
-    const deleteDevice = await client.entities.device.remove(value)
+    const checkResponse = await client.entities.device.list({
+      filter: {
+        Device: {
+          eq: value,
+        },
+      },
+    })
+
+    const deleteDevice = await client.entities.device.remove(checkResponse.items[0]._id)
     console.log(deleteDevice)
   }
 
@@ -96,7 +104,7 @@ export const HomePage = () => {
             <Link to={`/testlist/${item.Device}`} className="custom-link">
               <Button className="button-shadow-effects" variant="secondary">View Test</Button>
             </Link>
-            <Button className="delete-device-button" variant="secondary" id={item} onClick={handleDelete}>Delete</Button>
+            <Button className="delete-device-button" variant="secondary" id={item.Device} onClick={handleDelete}>Delete</Button>
           </div>
         )
         )}
