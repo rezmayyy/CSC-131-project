@@ -43,6 +43,43 @@ export const HomePage = () => {
     setDeviceList(listDeviceResponse?.items);
   }
 
+  const handleDelete = (event) => {
+    setDevice(event.target.id) // Device
+    deleteAllTest(event.target.id)// Device
+    deleteDevice(event.target.id)
+    console.log(event)
+
+  }
+
+  const deleteDevice = async (value) => {
+    const checkResponse = await client.entities.device.list({
+      filter: {
+        Device: {
+          eq: value,
+        },
+      },
+    })
+
+    const deleteDevice = await client.entities.device.remove(checkResponse.items[0]._id)
+    console.log(deleteDevice)
+  }
+
+  const deleteAllTest = async (value) => {
+    const checkResponseTest = await client.entities.test.list({
+      filter: {
+        Device: {
+          eq: value,
+        },
+      },
+    })
+
+    for(let i = 0; i < checkResponseTest.items.length; i++){
+      const deleteTest = await client.entities.test.remove(checkResponseTest.items[i]._id)
+      console.log(deleteTest)
+    }
+    
+  }
+  
   const searchDevice = async (value) => {
     const checkDeviceName = await client.entities.device.list({
       filter: {
@@ -59,6 +96,7 @@ export const HomePage = () => {
     setSearchDeviceInput(event.target.value);
     event.target.value ? searchDevice(event.target.value) : refreshList();
   }
+  
 
   return (
     <div>
@@ -90,6 +128,7 @@ export const HomePage = () => {
             <Link to={`/testlist/${item.Device}`} className="custom-link">
               <Button className="button-shadow-effects" variant="secondary">View Test</Button>
             </Link>
+            <Button className="delete-device-button" variant="secondary" id={item.Device} onClick={handleDelete}>Delete</Button>
           </div>
         ))}
         <div className="item-box">
