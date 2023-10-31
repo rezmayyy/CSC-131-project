@@ -44,7 +44,6 @@ export const HomePage = () => {
 
   return (
     <div>
-      <div><h1 className="title-header"><img src="AlgorithmAlliesLogo.png"/>Algorithm Allies Team 6</h1></div>
       <div><h2 id="subtitle-name">Device List:</h2></div>
       <div id="search-for-device">
         <input id="search-for-device-input"

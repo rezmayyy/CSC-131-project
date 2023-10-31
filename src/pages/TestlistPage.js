@@ -139,7 +139,6 @@ export const TestlistPage = () => {
 
   return (
     <div className="test-list-page">
-      <div><h1 className="title-header">Algorithm Allies Team 6</h1></div>
       <div><h2 id="subtitle-name">Test List for: {deviceName}</h2></div>
       <div className="test-list-data">
         <Box sx={{ height: 400, width: '100%', borderColor: 'primary.dark', '& .MuiDataGrid-cell:hover': {color: 'primary.main'} }} >
