@@ -10,7 +10,6 @@ export const DeviceNameDropDown = () => {
         setDevice("device1")
     }, [])
 
-
     const handleDeviceChange = (event) => {
         setDevice(event.target.value);
     }
