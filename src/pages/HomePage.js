@@ -57,7 +57,7 @@ export const HomePage = () => {
 
   const handleSearchChange = (event) => {
     setSearchDeviceInput(event.target.value);
-    searchDevice(event.target.value);
+    event.target.value ? searchDevice(event.target.value) : refreshList();
   }
 
   return (

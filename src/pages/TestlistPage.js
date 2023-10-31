@@ -38,7 +38,7 @@ export const TestlistPage = () => {
       setRows(someObject)
     }
     getTestRows()
-  })
+  },[])
 
   const columns = [
     { field: 'id', 
