@@ -150,9 +150,6 @@ export const FormPage = () => {
     return (
         <div>
             <div><h2 id="subtitle-name">Form Page: add a Test</h2></div>
-            <div className="general-div">
-                <Button className="general-buttons" variant="secondary" onClick={updateDeviceProgress}>Test</Button>
-            </div>
             <div>
                 <form autoComplete="off" onSubmit={handleSubmit}>
                     <div className="general-div">

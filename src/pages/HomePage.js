@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/App.css';
 import { Button, ProgressBar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,6 +15,7 @@ export const HomePage = () => {
 
   const [deviceList, setDeviceList] = useContext(DataContext).deviceList
   const [device, setDevice] = useContext(DataContext).device
+  const [searchDeviceInput, setSearchDeviceInput] = useState("")
 
   const addDevice = async () => {
     const checkDeviceName = await client.entities.device.list({
@@ -42,16 +43,76 @@ export const HomePage = () => {
     setDeviceList(listDeviceResponse?.items);
   }
 
+  const handleDelete = (event) => {
+    setDevice(event.target.id) // Device
+    deleteAllTest(event.target.id)// Device
+    deleteDevice(event.target.id)
+    console.log(event)
+
+  }
+
+  const deleteDevice = async (value) => {
+    const checkResponse = await client.entities.device.list({
+      filter: {
+        Device: {
+          eq: value,
+        },
+      },
+    })
+
+    const deleteDevice = await client.entities.device.remove(checkResponse.items[0]._id)
+    console.log(deleteDevice)
+  }
+
+  const deleteAllTest = async (value) => {
+    const checkResponseTest = await client.entities.test.list({
+      filter: {
+        Device: {
+          eq: value,
+        },
+      },
+    })
+
+    for(let i = 0; i < checkResponseTest.items.length; i++){
+      const deleteTest = await client.entities.test.remove(checkResponseTest.items[i]._id)
+      console.log(deleteTest)
+    }
+    
+  }
+  
+  const searchDevice = async (value) => {
+    const checkDeviceName = await client.entities.device.list({
+      filter: {
+        Device: {
+          contains: value
+        }
+      }
+    })
+    console.log(checkDeviceName.items)
+    setDeviceList(checkDeviceName.items)
+  }
+
+  const handleSearchChange = (event) => {
+    setSearchDeviceInput(event.target.value);
+    event.target.value ? searchDevice(event.target.value) : refreshList();
+  }
+  
+
   return (
     <div>
       <div><h2 id="subtitle-name">Device List:</h2></div>
       <div id="search-for-device">
-        <input id="search-for-device-input"
-          type="text"
-          name="deviceName"
-          placeholder="Device Name"
-        />
-        <Button id="search-for-device-button" variant="primary">Search</Button>
+        <form autoComplete="off">
+
+          <input id="search-for-device-input"
+            type="text"
+            name="deviceName"
+            placeholder="Device Name"
+            onChange={handleSearchChange}
+            value={searchDeviceInput}
+          />
+          <Button id="search-for-device-button" variant="primary">Search</Button>
+        </form>
       </div>
 
       <div className="container">
@@ -72,9 +133,13 @@ export const HomePage = () => {
             <Link to={`/testlist/${item.Device}`} className="custom-link">
               <Button className="button-shadow-effects" variant="secondary">View Test</Button>
             </Link>
+            <Button className="delete-device-button" variant="secondary" id={item.Device} onClick={handleDelete}>Delete</Button>
           </div>
-        )
-        )}
+        ))}
+        <div className="item-box">
+          <DeviceNameInput id="add-device-input" />
+          <Button id="add-device-button" variant="primary" onClick={addDevice}>+</Button>
+        </div>
       </div>
     </div>
   )
