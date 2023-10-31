@@ -53,7 +53,12 @@ export const HomePage = () => {
         />
         <Button id="search-for-device-button" variant="primary">Search</Button>
       </div>
+
       <div className="container">
+        <div className="add-device-button-div">
+            <DeviceNameInput id="add-device-input"/>
+            <Button id="add-device-button" variant="primary" onClick={addDevice}>New Device</Button>
+        </div>
         {deviceList?.map((item, index) => (
           <div key={index} className="item-box">
             <div className="item-device-homepage">
@@ -70,10 +75,6 @@ export const HomePage = () => {
           </div>
         )
         )}
-        <div className="item-box">
-          <DeviceNameInput id="add-device-input"/>
-          <Button id="add-device-button" variant="primary" onClick={addDevice}>+</Button>
-        </div>
       </div>
     </div>
   )
