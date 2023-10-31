@@ -2,8 +2,8 @@ import '../styles/App.css';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from "../configuration/firebase";
-import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { useState, useEffect, useContext } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
@@ -12,7 +12,7 @@ export const LoginPage = () => {
     const [password, setPassword] = useContext(AuthContext).password;
     const [user, setUser] = useContext(AuthContext).user;
     const navigate = useNavigate();
-    const [error, setError] = useState(null);      
+    const [error, setError] = useState(null);
 
     const signIn = async () => {
         try {
@@ -22,20 +22,19 @@ export const LoginPage = () => {
             localStorage.setItem('user', JSON.stringify(user));
             setEmail("");
             setPassword("");
-            setError(null); 
+            setUser(user); 
+            setError(null);
+            navigate("/"); 
         } catch (err) {
-            setError(err.message); 
+            setError(err.message);
         }
     };
 
     const logoutButton = useContext(AuthContext).logoutButton;
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         await signIn();
-        if (user) {
-            navigate("/");
-        }
     }
 
     return (
@@ -60,7 +59,9 @@ export const LoginPage = () => {
                 </form>
                 <div className="general-div">
                     {user ? (
-                        <p>You are logged in as {user.email}</p>
+                        <>
+                            <p>You are logged in as {user.email}</p>
+                        </>
                     ) : (
                         <p>You are not logged in. <Link to="/signup">Signup</Link></p>
                     )}
