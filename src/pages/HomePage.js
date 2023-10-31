@@ -43,10 +43,11 @@ export const HomePage = () => {
     setDeviceList(listDeviceResponse?.items);
   }
 
-  const handleDelete = (event) => {
+  const handleDelete = async (event) => {
     setDevice(event.target.id) // Device
     deleteAllTest(event.target.id)// Device
-    deleteDevice(event.target.id)
+    await deleteDevice(event.target.id)
+    refreshList()
     console.log(event)
 
   }
