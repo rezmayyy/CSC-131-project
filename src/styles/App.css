@@ -21,6 +21,11 @@
   flex-direction: column;
 }
 
+div[role="tooltip"] {
+  top: -60px !important;
+  justify-content: right !important;
+}
+
 /* Outline for text, idk i thought it would be cool but it hurts my eyes */
 /*
 .App-header h1 {
@@ -92,6 +97,8 @@
   column-gap: 20px;
   
 }
+
+.container 
 
 .item-box {
   box-sizing: border-box;

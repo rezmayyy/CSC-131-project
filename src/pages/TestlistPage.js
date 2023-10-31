@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { client } from '../context/dataContext';
@@ -141,33 +141,21 @@ export const TestlistPage = () => {
     <div className="test-list-page">
       <div><h2 id="subtitle-name">Test List for: {deviceName}</h2></div>
       <div className="test-list-data">
-      <div id="search-for-device">
-        <form autoComplete="off">
-
-          <input id="search-for-device-input"
-            type="text"
-            name="testName"
-            placeholder="Test Name"
-          />
-          <select name="device">
-                {/* {deviceList?.map((item, index) => (
-                    <option key={index} value={item.Device}>{item.Device}</option>
-                )
-                )} */}
-                <option>test1</option>
-                <option>test1</option>
-                <option>test1</option>
-          </select>
-          <Button id="search-for-device-button" variant="primary">Search</Button>
-        </form>
-      </div>
+      
         <Box sx={{ height: 400, width: '100%', borderColor: 'primary.dark', '& .MuiDataGrid-cell:hover': {color: 'primary.main'} }} >
           <Container>
 
           <DataGrid className='test-list-data-table'
             rows={rows}
             columns={columns}
+            components={{Toolbar: () => {
+              return <GridToolbarContainer sx={{justifyContent: 'flex-end'}}>
+                <GridToolbarColumnsButton />
+                <GridToolbarFilterButton />
+              </GridToolbarContainer>
+            }}}
             initialState={{
+              sorting: { sortModel: [{field: 'id', sort: 'asc'}]},
               pagination: {
                 paginationModel: {
                   pageSize: 5,
