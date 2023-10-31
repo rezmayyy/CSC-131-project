@@ -136,10 +136,6 @@ export const HomePage = () => {
             <Button className="delete-device-button" variant="secondary" id={item.Device} onClick={handleDelete}>Delete</Button>
           </div>
         ))}
-        <div className="item-box">
-          <DeviceNameInput id="add-device-input" />
-          <Button id="add-device-button" variant="primary" onClick={addDevice}>+</Button>
-        </div>
       </div>
     </div>
   )
